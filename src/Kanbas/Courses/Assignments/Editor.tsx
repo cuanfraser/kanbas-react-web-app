@@ -23,7 +23,9 @@ export default function AssignmentEditor() {
                         <label htmlFor='wd-group'>Assignment Group</label>
                     </td>
                     <td>
-                        <input id='wd-group' value={'ASSIGNMENTS'} />
+                        <select id='wd-group'>
+                            <option value='assignments'>Assignments</option>
+                        </select>
                     </td>
                 </tr>
 
@@ -32,7 +34,10 @@ export default function AssignmentEditor() {
                         <label htmlFor='wd-display-grade-as'>Display Grade as</label>
                     </td>
                     <td>
-                        <input id='wd-display-grade-as' value={'Percentage'} />
+                        <select id='wd-display-grade-as'>
+                            <option value='percentage'>Percentage</option>
+                            <option value='number'>Number</option>
+                        </select>
                     </td>
                 </tr>
 
@@ -41,16 +46,69 @@ export default function AssignmentEditor() {
                         <label htmlFor='wd-submission-type'>Submission Type</label>
                     </td>
                     <td>
-                        <input id='wd-submission-type' value={'Online'} />
+                        <select id='wd-submission-type'>
+                            <option value='online'>Online</option>
+                        </select>
                     </td>
                 </tr>
 
                 <tr>
                     <td align='right' valign='top'>
                         <label htmlFor='wd-text-entry'>Online Entry Options</label>
-                    </td>
-                    <td>
-                        <input id='wd-text-entry' value={'Online'} />
+                        <table>
+                            <tr>
+                                <td align='right' valign='top'>
+                                    <label htmlFor='wd-text-entry'>Text Entry</label>
+                                    <input
+                                        id='wd-text-entry'
+                                        type='checkbox'
+                                        value={'Text Entry'}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align='right' valign='top'>
+                                    <label htmlFor='wd-website-url'>Website URL</label>
+                                    <input
+                                        id='wd-website-url'
+                                        type='checkbox'
+                                        value={'Website URL'}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align='right' valign='top'>
+                                    <label htmlFor='wd-media-recordings'>Media Recordings</label>
+                                    <input
+                                        id='wd-media-recordings'
+                                        type='checkbox'
+                                        value={'Media Recordings'}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align='right' valign='top'>
+                                    <label htmlFor='wd-student-annotation'>
+                                        Student Annotation
+                                    </label>
+                                    <input
+                                        id='wd-student-annotation'
+                                        type='checkbox'
+                                        value={'Student Annotation'}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align='right' valign='top'>
+                                    <label htmlFor='wd-file-upload'>File Uploads</label>
+                                    <input
+                                        id='wd-file-upload'
+                                        type='checkbox'
+                                        value={'File Uploads'}
+                                    />
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
 
@@ -68,7 +126,7 @@ export default function AssignmentEditor() {
                         <label htmlFor='wd-due-date'>Due</label>
                     </td>
                     <td>
-                        <input id='wd-due-date' type='date' value={'05/13/2024'} />
+                        <input id='wd-due-date' type='date' value={'2024-05-13'} />
                     </td>
                 </tr>
 
@@ -77,16 +135,18 @@ export default function AssignmentEditor() {
                         <label htmlFor='wd-available-from'>Available from</label>
                     </td>
                     <td>
-                        <input id='wd-available-from' type='date' value={'05/06/2024'} />
+                        <input id='wd-available-from' type='date' value={'2024-05-06'} />
                     </td>
                     <td align='right' valign='top'>
                         <label htmlFor='wd-available-until'>Until</label>
                     </td>
                     <td>
-                        <input id='wd-available-until' type='date' value={'05/20/2024'} />
+                        <input id='wd-available-until' type='date' value={'2024-05-20'} />
                     </td>
                 </tr>
             </table>
+            <input id='wd-cancel' type='button' value='Cancel' />
+            <input id='wd-save' type='button' value='Save' />
         </div>
     );
 }
