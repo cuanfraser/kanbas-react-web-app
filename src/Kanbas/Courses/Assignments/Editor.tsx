@@ -5,104 +5,120 @@ export default function AssignmentEditor() {
                 Assignment Name
             </label>
             <input id='wd-name' className='form-control' value='A1 - ENV + HTML' />
-            <br />
+
             <br />
             <textarea id='wd-description' className='form-control'>
                 The assignment is available online Submit a link to the landing page of
             </textarea>
             <br />
 
-            <label htmlFor='wd-points' className='form-label'>
-                Points
-            </label>
-            <input id='wd-points' className='form-control' value={100} />
+            <div className='row mb-3'>
+                <label htmlFor='wd-points' className='col-sm-2 col-form-label'>
+                    Points
+                </label>
+                <div className='col-sm-10'>
+                    <input id='wd-points' className='form-control' value={100} />
+                </div>
+            </div>
 
-            <label htmlFor='wd-group' className='form-label'>
-                Assignment Group
-            </label>
-            <select id='wd-group' className='form-control'>
-                <option value='assignments'>Assignments</option>
-            </select>
+            <div className='row mb-3'>
+                <label htmlFor='wd-group' className='col-sm-2 col-form-label'>
+                    Assignment Group
+                </label>
+                <div className='col-sm-10'>
+                    <select id='wd-group' className='form-select'>
+                        <option value='assignments'>Assignments</option>
+                    </select>
+                </div>
+            </div>
 
-            <label htmlFor='wd-display-grade-as' className='form-label'>
-                Display Grade as
-            </label>
-            <select id='wd-display-grade-as' className='form-control'>
-                <option value='percentage'>Percentage</option>
-                <option value='number'>Number</option>
-            </select>
+            <div className='row mb-3'>
+                <label htmlFor='wd-display-grade-as' className='col-sm-2 col-form-label'>
+                    Display Grade as
+                </label>
+                <div className='col-sm-10'>
+                    <select id='wd-display-grade-as' className='form-select'>
+                        <option value='percentage'>Percentage</option>
+                        <option value='number'>Number</option>
+                    </select>
+                </div>
+            </div>
 
-            <label htmlFor='wd-entry-options' className='form-label'>
-                Submission Type
-            </label>
-
-            <div id='wd-entry-options' className='form-control'>
-                <select id='wd-submission-type' className='form-control'>
-                    <option value='online'>Online</option>
-                </select>
-
-                <label htmlFor='wd-text-entry' className='form-label'>
-                    Online Entry Options
+            <div className='row mb-3'>
+                <label htmlFor='wd-entry-options' className='col-sm-2 col-form-label'>
+                    Submission Type
                 </label>
 
-                <div className='form-check'>
-                    <label htmlFor='wd-text-entry' className='form-check-label'>
-                        Text Entry
-                    </label>
-                    <input
-                        id='wd-text-entry'
-                        className='form-check-input'
-                        type='checkbox'
-                        value={'Text Entry'}
-                    />
-                </div>
+                <div id='wd-entry-options' className='col-sm-10 '>
+                    <div className='form-control'>
+                        <select id='wd-submission-type' className='form-select'>
+                            <option value='online'>Online</option>
+                        </select>
 
-                <div className='form-check'>
-                    <label htmlFor='wd-website-url' className='form-check-label'>
-                        Website URL
-                    </label>
-                    <input
-                        id='wd-website-url'
-                        className='form-check-input'
-                        type='checkbox'
-                        value={'Website URL'}
-                    />
-                </div>
+                        <label htmlFor='wd-text-entry' className='form-label'>
+                            Online Entry Options
+                        </label>
 
-                <div className='form-check'>
-                    <label htmlFor='wd-media-recordings' className='form-check-label'>
-                        Media Recordings
-                    </label>
-                    <input
-                        id='wd-media-recordings'
-                        className='form-check-input'
-                        type='checkbox'
-                        value={'Media Recordings'}
-                    />
-                </div>
+                        <div className='form-check'>
+                            <label htmlFor='wd-text-entry' className='form-check-label'>
+                                Text Entry
+                            </label>
+                            <input
+                                id='wd-text-entry'
+                                className='form-check-input'
+                                type='checkbox'
+                                value={'Text Entry'}
+                            />
+                        </div>
 
-                <div className='form-check'>
-                    <label htmlFor='wd-student-annotation' className='form-check-label'>
-                        Student Annotation
-                    </label>
-                    <input
-                        id='wd-student-annotation'
-                        className='form-check-input'
-                        type='checkbox'
-                        value={'Student Annotation'}
-                    />
-                </div>
+                        <div className='form-check'>
+                            <label htmlFor='wd-website-url' className='form-check-label'>
+                                Website URL
+                            </label>
+                            <input
+                                id='wd-website-url'
+                                className='form-check-input'
+                                type='checkbox'
+                                value={'Website URL'}
+                            />
+                        </div>
 
-                <div className='form-check'>
-                    <label htmlFor='wd-file-upload' className='form-check-label'>
-                        File Uploads
-                    </label>
-                    <input
-                        id='wd-file-upload'
-                        className='form-check-input'
-                        type='checkbox'
-                        value={'File Uploads'}
-                    />
+                        <div className='form-check'>
+                            <label htmlFor='wd-media-recordings' className='form-check-label'>
+                                Media Recordings
+                            </label>
+                            <input
+                                id='wd-media-recordings'
+                                className='form-check-input'
+                                type='checkbox'
+                                value={'Media Recordings'}
+                            />
+                        </div>
+
+                        <div className='form-check'>
+                            <label htmlFor='wd-student-annotation' className='form-check-label'>
+                                Student Annotation
+                            </label>
+                            <input
+                                id='wd-student-annotation'
+                                className='form-check-input'
+                                type='checkbox'
+                                value={'Student Annotation'}
+                            />
+                        </div>
+
+                        <div className='form-check'>
+                            <label htmlFor='wd-file-upload' className='form-check-label'>
+                                File Uploads
+                            </label>
+                            <input
+                                id='wd-file-upload'
+                                className='form-check-input'
+                                type='checkbox'
+                                value={'File Uploads'}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
 
