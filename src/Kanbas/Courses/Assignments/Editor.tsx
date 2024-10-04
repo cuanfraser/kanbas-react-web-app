@@ -122,43 +122,74 @@ export default function AssignmentEditor() {
                 </div>
             </div>
 
-            <label htmlFor='wd-assign-to' className='form-label'>
-                Assign to
-            </label>
-            <input id='wd-assign-to' className='form-control' value={'Everyone'} />
+            <div className='row mb-3'>
+                <label htmlFor='assign-options' className='col-sm-2 col-form-label'>
+                    Assign
+                </label>
 
-            <label htmlFor='wd-due-date' className='form-label'>
-                Due
-            </label>
-            <input id='wd-due-date' className='form-control' type='date' value={'2024-05-13'} />
+                <div id='assign-options' className='col-sm-10'>
+                    <div className='form-control'>
+                        <label htmlFor='wd-assign-to' className='form-label'>
+                            Assign to
+                        </label>
 
-            <label htmlFor='wd-available-from' className='form-label'>
-                Available from
-            </label>
-            <input
-                id='wd-available-from'
-                className='form-control'
-                type='date'
-                value={'2024-05-06'}
-            />
+                        <input id='wd-assign-to' className='form-control' value={'Everyone'} />
+                        <label htmlFor='wd-due-date' className='form-label'>
+                            Due
+                        </label>
+                        <input
+                            id='wd-due-date'
+                            className='form-control'
+                            type='date'
+                            value={'2024-05-13'}
+                        />
+                        <div className='row mb-3'>
+                            <div className='col-sm-6'>
+                                <label htmlFor='wd-available-from' className='form-label'>
+                                    Available from
+                                </label>
+                                <input
+                                    id='wd-available-from'
+                                    className='form-control'
+                                    type='date'
+                                    value={'2024-05-06'}
+                                />
+                            </div>
 
-            <label htmlFor='wd-available-until' className='form-label'>
-                Until
-            </label>
-            <input
-                id='wd-available-until'
-                className='form-control'
-                type='date'
-                value={'2024-05-20'}
-            />
+                            <div className='col-sm-6'>
+                                <label htmlFor='wd-available-until' className='form-label'>
+                                    Until
+                                </label>
+                                <input
+                                    id='wd-available-until'
+                                    className='form-control'
+                                    type='date'
+                                    value={'2024-05-20'}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <input id='wd-cancel' className='form-control btn ' type='button' value='Cancel' />
-            <input
-                id='wd-save'
-                className='form-control btn btn-danger'
-                type='button'
-                value='Save'
-            />
+            <div className='row mb-3 justify-content-end'>
+                <div className='col-md-2'>
+                    <input
+                        id='wd-cancel'
+                        className='form-control btn btn-sm'
+                        type='button'
+                        value='Cancel'
+                    />
+                </div>
+                <div className='col-md-2'>
+                    <input
+                        id='wd-save'
+                        className='form-control btn btn-sm btn-danger'
+                        type='button'
+                        value='Save'
+                    />
+                </div>
+            </div>
         </form>
     );
 }
