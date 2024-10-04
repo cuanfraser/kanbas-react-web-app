@@ -8,27 +8,31 @@ import { IoEllipsisVertical } from 'react-icons/io5';
 export default function Assignments() {
     return (
         <div id='wd-assignments' className='text-nowrap'>
-            <div id='wd-assignments-controls d-flex flex-row' className=''>
-                <div>
+            <div id='wd-assignments-controls' className='row'>
+                <div className='col-sm-1'>
                     <CiSearch />
                 </div>
-                <input
-                    id='wd-search-assignment'
-                    className='form-control w-50'
-                    placeholder='Search for Assignments'
-                />
+                <div className='col-sm-6'>
+                    <input
+                        id='wd-search-assignment'
+                        className='form-control w-50'
+                        placeholder='Search for Assignments'
+                    />
+                </div>
 
-                <button
-                    id='wd-add-assignment-group'
-                    className='btn btn-lg btn-secondary me-1 float-end'
-                >
-                    <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
-                    Group
-                </button>
-                <button id='wd-add-assignment' className='btn btn-lg btn-danger me-1 float-end'>
-                    <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
-                    Assignment
-                </button>
+                <div className='col-sm-5'>
+                    <button
+                        id='wd-add-assignment-group'
+                        className='btn btn-lg btn-secondary me-1 float-end'
+                    >
+                        <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
+                        Group
+                    </button>
+                    <button id='wd-add-assignment' className='btn btn-lg btn-danger me-1 float-end'>
+                        <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
+                        Assignment
+                    </button>
+                </div>
             </div>
 
             <ul id='wd-assignment-list' className='list-group rounded-0'>
@@ -43,10 +47,13 @@ export default function Assignments() {
                 </li>
 
                 <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
-                    <div className='d-flex flex-row align-items-center'>
-                        <BsGripVertical className='me-2 fs-3' />
-                        <VscNotebook className='me-2 fs-3 text-success' />
-                        <div>
+                    <div className='row align-items-center'>
+                        <div className='col-md-1'>
+                            <BsGripVertical className='fs-3' />
+                            <VscNotebook className='fs-3 text-success' />
+                        </div>
+
+                        <div className='col-md-10'>
                             <a
                                 className='wd-assignment-link text-dark text-bold text-decoration-none'
                                 href='#/Kanbas/Courses/1234/Assignments/A1'
@@ -59,16 +66,18 @@ export default function Assignments() {
                                 <p>Due May 13 at 11:59pm | 100 pts</p>
                             </div>
                         </div>
-                        <div className='justify-content-end float-end'>
+                        <div className='col-md-1'>
                             <LessonControlButtons />
                         </div>
                     </div>
                 </li>
                 <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
-                    <div className='d-flex flex-row align-items-center'>
-                        <BsGripVertical className='me-2 fs-3' />
-                        <VscNotebook className='me-2 fs-3 text-success' />
-                        <div>
+                    <div className='row align-items-center'>
+                    <div className='col-md-1'>
+                            <BsGripVertical className='fs-3' />
+                            <VscNotebook className='fs-3 text-success' />
+                        </div>
+                        <div className='col-md-10'>
                             <a
                                 className='wd-assignment-link text-dark text-bold text-decoration-none'
                                 href='#/Kanbas/Courses/1234/Assignments/A2'
@@ -81,16 +90,18 @@ export default function Assignments() {
                                 <p>Due May 13 at 11:59pm | 100 pts</p>
                             </div>
                         </div>
-                        <div className='justify-content-end float-end'>
+                        <div className='col-md-1'>
                             <LessonControlButtons />
                         </div>
                     </div>
                 </li>
                 <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
-                    <div className='d-flex flex-row align-items-center'>
-                        <BsGripVertical className='me-2 fs-3' />
-                        <VscNotebook className='me-2 fs-3 text-success' />
-                        <div>
+                    <div className='row align-items-center'>
+                    <div className='col-md-1'>
+                            <BsGripVertical className='fs-3' />
+                            <VscNotebook className='fs-3 text-success' />
+                        </div>
+                        <div className='col-md-10'>
                             <a
                                 className='wd-assignment-link text-dark text-bold text-decoration-none'
                                 href='#/Kanbas/Courses/1234/Assignments/A3'
@@ -103,7 +114,7 @@ export default function Assignments() {
                                 <p>Due May 13 at 11:59pm | 100 pts</p>
                             </div>
                         </div>
-                        <div className='justify-content-end float-end'>
+                        <div className='col-md-1'>
                             <LessonControlButtons />
                         </div>
                     </div>
