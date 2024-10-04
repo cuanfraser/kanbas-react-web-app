@@ -15,13 +15,11 @@ export default function AssignmentEditor() {
             <label htmlFor='wd-points' className='form-label'>
                 Points
             </label>
-
             <input id='wd-points' className='form-control' value={100} />
 
             <label htmlFor='wd-group' className='form-label'>
                 Assignment Group
             </label>
-
             <select id='wd-group' className='form-control'>
                 <option value='assignments'>Assignments</option>
             </select>
@@ -29,90 +27,98 @@ export default function AssignmentEditor() {
             <label htmlFor='wd-display-grade-as' className='form-label'>
                 Display Grade as
             </label>
-
             <select id='wd-display-grade-as' className='form-control'>
                 <option value='percentage'>Percentage</option>
                 <option value='number'>Number</option>
             </select>
 
-            <label htmlFor='wd-submission-type' className='form-label'>
+            <label htmlFor='wd-entry-options' className='form-label'>
                 Submission Type
             </label>
 
-            <select id='wd-submission-type' className='form-control'>
-                <option value='online'>Online</option>
-            </select>
+            <div id='wd-entry-options' className='form-control'>
+                <select id='wd-submission-type' className='form-control'>
+                    <option value='online'>Online</option>
+                </select>
 
-            <label htmlFor='wd-text-entry' className='form-label'>
-                Online Entry Options
-            </label>
+                <label htmlFor='wd-text-entry' className='form-label'>
+                    Online Entry Options
+                </label>
 
-            <label htmlFor='wd-text-entry' className='form-label'>
-                Text Entry
-            </label>
-            <input
-                id='wd-text-entry'
-                className='form-control'
-                type='checkbox'
-                value={'Text Entry'}
-            />
+                <div className='form-check'>
+                    <label htmlFor='wd-text-entry' className='form-check-label'>
+                        Text Entry
+                    </label>
+                    <input
+                        id='wd-text-entry'
+                        className='form-check-input'
+                        type='checkbox'
+                        value={'Text Entry'}
+                    />
+                </div>
 
-            <label htmlFor='wd-website-url' className='form-label'>
-                Website URL
-            </label>
-            <input
-                id='wd-website-url'
-                className='form-control'
-                type='checkbox'
-                value={'Website URL'}
-            />
+                <div className='form-check'>
+                    <label htmlFor='wd-website-url' className='form-check-label'>
+                        Website URL
+                    </label>
+                    <input
+                        id='wd-website-url'
+                        className='form-check-input'
+                        type='checkbox'
+                        value={'Website URL'}
+                    />
+                </div>
 
-            <label htmlFor='wd-media-recordings' className='form-label'>
-                Media Recordings
-            </label>
-            <input
-                id='wd-media-recordings'
-                className='form-control'
-                type='checkbox'
-                value={'Media Recordings'}
-            />
+                <div className='form-check'>
+                    <label htmlFor='wd-media-recordings' className='form-check-label'>
+                        Media Recordings
+                    </label>
+                    <input
+                        id='wd-media-recordings'
+                        className='form-check-input'
+                        type='checkbox'
+                        value={'Media Recordings'}
+                    />
+                </div>
 
-            <label htmlFor='wd-student-annotation' className='form-label'>
-                Student Annotation
-            </label>
-            <input
-                id='wd-student-annotation'
-                className='form-control'
-                type='checkbox'
-                value={'Student Annotation'}
-            />
+                <div className='form-check'>
+                    <label htmlFor='wd-student-annotation' className='form-check-label'>
+                        Student Annotation
+                    </label>
+                    <input
+                        id='wd-student-annotation'
+                        className='form-check-input'
+                        type='checkbox'
+                        value={'Student Annotation'}
+                    />
+                </div>
 
-            <label htmlFor='wd-file-upload' className='form-label'>
-                File Uploads
-            </label>
-            <input
-                id='wd-file-upload'
-                className='form-control'
-                type='checkbox'
-                value={'File Uploads'}
-            />
+                <div className='form-check'>
+                    <label htmlFor='wd-file-upload' className='form-check-label'>
+                        File Uploads
+                    </label>
+                    <input
+                        id='wd-file-upload'
+                        className='form-check-input'
+                        type='checkbox'
+                        value={'File Uploads'}
+                    />
+                </div>
+            </div>
 
             <label htmlFor='wd-assign-to' className='form-label'>
                 Assign to
             </label>
-
             <input id='wd-assign-to' className='form-control' value={'Everyone'} />
 
             <label htmlFor='wd-due-date' className='form-label'>
                 Due
             </label>
-
             <input id='wd-due-date' className='form-control' type='date' value={'2024-05-13'} />
 
             <label htmlFor='wd-available-from' className='form-label'>
                 Available from
             </label>
-
             <input
                 id='wd-available-from'
                 className='form-control'
@@ -123,7 +129,6 @@ export default function AssignmentEditor() {
             <label htmlFor='wd-available-until' className='form-label'>
                 Until
             </label>
-
             <input
                 id='wd-available-until'
                 className='form-control'
@@ -131,8 +136,13 @@ export default function AssignmentEditor() {
                 value={'2024-05-20'}
             />
 
-            <input id='wd-cancel' className='form-control' type='button' value='Cancel' />
-            <input id='wd-save' className='form-control' type='button' value='Save' />
+            <input id='wd-cancel' className='form-control btn ' type='button' value='Cancel' />
+            <input
+                id='wd-save'
+                className='form-control btn btn-danger'
+                type='button'
+                value='Save'
+            />
         </form>
     );
 }
