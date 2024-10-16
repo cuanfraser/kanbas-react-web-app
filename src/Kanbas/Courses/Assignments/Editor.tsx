@@ -1,14 +1,19 @@
+import { useParams } from "react-router";
+import * as db from '../../Database';
+
 export default function AssignmentEditor() {
+    const { aid } = useParams();
+    const assignment = db.assignments.find(assignment => assignment._id === aid);
     return (
         <form id='wd-assignments-editor'>
             <label htmlFor='wd-name' className='form-label'>
                 Assignment Name
             </label>
-            <input id='wd-name' className='form-control' value='A1 - ENV + HTML' />
+            <input id='wd-name' className='form-control' value={assignment?.title} />
 
             <br />
             <textarea id='wd-description' className='form-control'>
-                The assignment is available online Submit a link to the landing page of
+                {assignment?.description}
             </textarea>
             <br />
 
@@ -17,7 +22,7 @@ export default function AssignmentEditor() {
                     Points
                 </label>
                 <div className='col-sm-10'>
-                    <input id='wd-points' className='form-control' value={100} />
+                    <input id='wd-points' className='form-control' value={assignment?.points} />
                 </div>
             </div>
 
@@ -141,7 +146,7 @@ export default function AssignmentEditor() {
                             id='wd-due-date'
                             className='form-control'
                             type='date'
-                            value={'2024-05-13'}
+                            value={assignment?.due}
                         />
                         <div className='row mb-3'>
                             <div className='col-sm-6'>
@@ -152,7 +157,7 @@ export default function AssignmentEditor() {
                                     id='wd-available-from'
                                     className='form-control'
                                     type='date'
-                                    value={'2024-05-06'}
+                                    value={assignment?.available}
                                 />
                             </div>
 
@@ -164,7 +169,7 @@ export default function AssignmentEditor() {
                                     id='wd-available-until'
                                     className='form-control'
                                     type='date'
-                                    value={'2024-05-20'}
+                                    value={assignment?.due}
                                 />
                             </div>
                         </div>

@@ -56,7 +56,7 @@ export default function Assignments() {
                     .map((assignment: any) => (
                         <Link
                             key={assignment._id}
-                            to={`/Kanbas/Courses/${cid}/assignments/${assignment._id}`}
+                            to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
                         >
                             <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
                                 <div className='row align-items-center'>
