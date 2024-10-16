@@ -57,6 +57,7 @@ export default function Assignments() {
                         <Link
                             key={assignment._id}
                             to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                            className='text-decoration-none'
                         >
                             <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
                                 <div className='row align-items-center'>
