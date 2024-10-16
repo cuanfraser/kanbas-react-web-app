@@ -203,5 +203,7 @@ export default function AssignmentEditor() {
                 </div>
             </form>
         );
+    } else {
+        return (<div></div>);
     }
 }
