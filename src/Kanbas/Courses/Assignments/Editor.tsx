@@ -1,9 +1,10 @@
-import { useParams } from "react-router";
+import { useParams } from 'react-router';
 import * as db from '../../Database';
+import { Link } from 'react-router-dom';
 
 export default function AssignmentEditor() {
-    const { aid } = useParams();
-    const assignment = db.assignments.find(assignment => assignment._id === aid);
+    const { cid, aid } = useParams();
+    const assignment = db.assignments.find((assignment) => assignment._id === aid);
     return (
         <form id='wd-assignments-editor'>
             <label htmlFor='wd-name' className='form-label'>
@@ -169,7 +170,7 @@ export default function AssignmentEditor() {
                                     id='wd-available-until'
                                     className='form-control'
                                     type='date'
-                                    value={assignment?.due}
+                                    value={assignment?.available}
                                 />
                             </div>
                         </div>
@@ -179,20 +180,24 @@ export default function AssignmentEditor() {
 
             <div className='row mb-3 justify-content-end'>
                 <div className='col-md-2'>
-                    <input
-                        id='wd-cancel'
-                        className='form-control btn btn-sm'
-                        type='button'
-                        value='Cancel'
-                    />
+                    <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
+                        <input
+                            id='wd-cancel'
+                            className='form-control btn btn-sm'
+                            type='button'
+                            value='Cancel'
+                        />
+                    </Link>
                 </div>
                 <div className='col-md-2'>
-                    <input
-                        id='wd-save'
-                        className='form-control btn btn-sm btn-danger'
-                        type='button'
-                        value='Save'
-                    />
+                    <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
+                        <input
+                            id='wd-save'
+                            className='form-control btn btn-sm btn-danger'
+                            type='button'
+                            value='Save'
+                        />
+                    </Link>
                 </div>
             </div>
         </form>
