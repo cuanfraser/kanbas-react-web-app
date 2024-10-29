@@ -1,11 +1,16 @@
+import * as db from '../../Database';
 import { BsGripVertical } from 'react-icons/bs';
 import LessonControlButtons from '../Modules/LessonControlButtons';
 import { FaPlus } from 'react-icons/fa';
 import { CiSearch } from 'react-icons/ci';
 import { VscNotebook } from 'react-icons/vsc';
 import { IoEllipsisVertical } from 'react-icons/io5';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default function Assignments() {
+    const { cid } = useParams();
+    const assignments = db.assignments;
     return (
         <div id='wd-assignments' className='text-nowrap'>
             <div id='wd-assignments-controls' className='row'>
@@ -46,79 +51,41 @@ export default function Assignments() {
                     </div>
                 </li>
 
-                <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
-                    <div className='row align-items-center'>
-                        <div className='col-md-1'>
-                            <BsGripVertical className='fs-3' />
-                            <VscNotebook className='fs-3 text-success' />
-                        </div>
+                {assignments
+                    .filter((assignment: any) => assignment.course === cid)
+                    .map((assignment: any) => (
+                        <Link
+                            key={assignment._id}
+                            to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                            className='text-decoration-none'
+                        >
+                            <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
+                                <div className='row align-items-center'>
+                                    <div className='col-md-1'>
+                                        <BsGripVertical className='fs-3' />
+                                        <VscNotebook className='fs-3 text-success' />
+                                    </div>
 
-                        <div className='col-md-10'>
-                            <a
-                                className='wd-assignment-link text-dark text-bold text-decoration-none'
-                                href='#/Kanbas/Courses/1234/Assignments/A1'
-                            >
-                                <h2>A1</h2>
-                            </a>
-                            <div className='d-flex flex-row'>
-                                <p className='text-success'>Multiple Modules | </p>
-                                <p> Not available until May 6 at 12:00 am | </p>
-                                <p>Due May 13 at 11:59pm | 100 pts</p>
-                            </div>
-                        </div>
-                        <div className='col-md-1'>
-                            <LessonControlButtons />
-                        </div>
-                    </div>
-                </li>
-                <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
-                    <div className='row align-items-center'>
-                    <div className='col-md-1'>
-                            <BsGripVertical className='fs-3' />
-                            <VscNotebook className='fs-3 text-success' />
-                        </div>
-                        <div className='col-md-10'>
-                            <a
-                                className='wd-assignment-link text-dark text-bold text-decoration-none'
-                                href='#/Kanbas/Courses/1234/Assignments/A2'
-                            >
-                                <h2>A2</h2>
-                            </a>
-                            <div className='d-flex flex-row'>
-                                <p className='text-success'>Multiple Modules | </p>
-                                <p> Not available until May 6 at 12:00 am | </p>
-                                <p>Due May 13 at 11:59pm | 100 pts</p>
-                            </div>
-                        </div>
-                        <div className='col-md-1'>
-                            <LessonControlButtons />
-                        </div>
-                    </div>
-                </li>
-                <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
-                    <div className='row align-items-center'>
-                    <div className='col-md-1'>
-                            <BsGripVertical className='fs-3' />
-                            <VscNotebook className='fs-3 text-success' />
-                        </div>
-                        <div className='col-md-10'>
-                            <a
-                                className='wd-assignment-link text-dark text-bold text-decoration-none'
-                                href='#/Kanbas/Courses/1234/Assignments/A3'
-                            >
-                                <h2>A3</h2>
-                            </a>
-                            <div className='d-flex flex-row'>
-                                <p className='text-success'>Multiple Modules | </p>
-                                <p> Not available until May 6 at 12:00 am | </p>
-                                <p>Due May 13 at 11:59pm | 100 pts</p>
-                            </div>
-                        </div>
-                        <div className='col-md-1'>
-                            <LessonControlButtons />
-                        </div>
-                    </div>
-                </li>
+                                    <div className='col-md-10'>
+                                        <a
+                                            className='wd-assignment-link text-dark text-bold text-decoration-none'
+                                            href='#/Kanbas/Courses/1234/Assignments/A1'
+                                        >
+                                            <h2>{assignment.title}</h2>
+                                        </a>
+                                        <div className='d-flex flex-row'>
+                                            <p className='text-success'>{assignment.modules} Modules | </p>
+                                            <p> Not available until {assignment.available} | </p>
+                                            <p>Due {assignment.due} | {assignment.points} pts</p>
+                                        </div>
+                                    </div>
+                                    <div className='col-md-1'>
+                                        <LessonControlButtons />
+                                    </div>
+                                </div>
+                            </li>
+                        </Link>
+                    ))}
             </ul>
         </div>
     );
