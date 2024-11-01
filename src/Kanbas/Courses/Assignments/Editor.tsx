@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 import * as db from '../../Database';
 import { Link } from 'react-router-dom';
+import FacultyOnly from '../../FacultyOnly';
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
@@ -179,31 +180,33 @@ export default function AssignmentEditor() {
                     </div>
                 </div>
 
-                <div className='row mb-3 justify-content-end'>
-                    <div className='col-md-2'>
-                        <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
-                            <input
-                                id='wd-cancel'
-                                className='form-control btn btn-sm'
-                                type='button'
-                                value='Cancel'
-                            />
-                        </Link>
+                <FacultyOnly>
+                    <div className='row mb-3 justify-content-end'>
+                        <div className='col-md-2'>
+                            <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
+                                <input
+                                    id='wd-cancel'
+                                    className='form-control btn btn-sm'
+                                    type='button'
+                                    value='Cancel'
+                                />
+                            </Link>
+                        </div>
+                        <div className='col-md-2'>
+                            <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
+                                <input
+                                    id='wd-save'
+                                    className='form-control btn btn-sm btn-danger'
+                                    type='button'
+                                    value='Save'
+                                />
+                            </Link>
+                        </div>
                     </div>
-                    <div className='col-md-2'>
-                        <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
-                            <input
-                                id='wd-save'
-                                className='form-control btn btn-sm btn-danger'
-                                type='button'
-                                value='Save'
-                            />
-                        </Link>
-                    </div>
-                </div>
+                </FacultyOnly>
             </form>
         );
     } else {
-        return (<div></div>);
+        return <div></div>;
     }
 }

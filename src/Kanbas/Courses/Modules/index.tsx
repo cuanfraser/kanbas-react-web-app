@@ -6,6 +6,7 @@ import { BsGripVertical } from 'react-icons/bs';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addModule, deleteModule, editModule, updateModule } from './reducer';
+import FacultyOnly from '../../FacultyOnly';
 
 export default function Modules() {
     const { cid } = useParams();
@@ -15,18 +16,21 @@ export default function Modules() {
 
     return (
         <div>
-            <ModulesControls
-                setModuleName={setModuleName}
-                moduleName={moduleName}
-                addModule={() => {
-                    dispatch(addModule({ name: moduleName, course: cid }));
-                    setModuleName('');
-                }}
-            />
-            <br />
-            <br />
-            <br />
-            <br />
+            <FacultyOnly>
+                <ModulesControls
+                    setModuleName={setModuleName}
+                    moduleName={moduleName}
+                    addModule={() => {
+                        dispatch(addModule({ name: moduleName, course: cid }));
+                        setModuleName('');
+                    }}
+                />
+                <br />
+                <br />
+                <br />
+                <br />
+            </FacultyOnly>
+
             <ul id='wd-modules' className='list-group rounded-0'>
                 {modules
                     .filter((module: any) => module.course === cid)
@@ -53,13 +57,15 @@ export default function Modules() {
                                         defaultValue={module.name}
                                     />
                                 )}
-                                <ModuleControlButtons
-                                    moduleId={module._id}
-                                    deleteModule={(moduleId) => {
-                                        dispatch(deleteModule(moduleId));
-                                    }}
-                                    editModule={(moduleId) => dispatch(editModule(moduleId))}
-                                />
+                                <FacultyOnly>
+                                    <ModuleControlButtons
+                                        moduleId={module._id}
+                                        deleteModule={(moduleId) => {
+                                            dispatch(deleteModule(moduleId));
+                                        }}
+                                        editModule={(moduleId) => dispatch(editModule(moduleId))}
+                                    />
+                                </FacultyOnly>
                             </div>
 
                             {module.lessons && (
@@ -68,7 +74,9 @@ export default function Modules() {
                                         <li className='wd-lesson list-group-item p-3 ps-1'>
                                             <BsGripVertical className='me-2 fs-3' />
                                             {lesson.name}
-                                            <LessonControlButtons />
+                                            <FacultyOnly>
+                                                <LessonControlButtons />
+                                            </FacultyOnly>
                                         </li>
                                     ))}
                                 </ul>
