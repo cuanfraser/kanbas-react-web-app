@@ -8,10 +8,11 @@ import { IoEllipsisVertical } from 'react-icons/io5';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../../FacultyOnly';
+import { useSelector } from 'react-redux';
 
 export default function Assignments() {
     const { cid } = useParams();
-    const assignments = db.assignments;
+    const { assignments } = useSelector((state: any) => state.assignmentReducer);
     return (
         <div id='wd-assignments' className='text-nowrap'>
             <div id='wd-assignments-controls' className='row'>

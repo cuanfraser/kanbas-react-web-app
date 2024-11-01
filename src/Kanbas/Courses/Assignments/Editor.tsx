@@ -1,22 +1,44 @@
 import { useParams } from 'react-router';
-import * as db from '../../Database';
+
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../../FacultyOnly';
+import { useDispatch, useSelector } from 'react-redux';
+import { addModule } from '../Modules/reducer';
+import { useState } from 'react';
+import { addAssignment, updateAssignment } from './reducer';
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
-    const assignment = db.assignments.find((assignment) => assignment._id === aid);
+    const { assignments } = useSelector((state: any) => state.assignmentReducer);
+    const assignment = assignments.find((assignment: any) => assignment._id === aid);
+    const dispatch = useDispatch();
+
+    const [title, setTitle] = useState(assignment ? assignment.title : '');
+    const [description, setDescription] = useState(assignment ? assignment.description : '');
+    const [points, setPoints] = useState(assignment ? assignment.points : 0);
+    const [due, setDueDate] = useState(assignment ? assignment.due : '');
+    const [availableFrom, setAvailableFrom] = useState(assignment ? assignment.availableFrom : '');
+    const [availableTo, setAvailableTo] = useState(assignment ? assignment.availableTo : '');
+
     return (
         <form id='wd-assignments-editor'>
             <label htmlFor='wd-name' className='form-label'>
                 Assignment Name
             </label>
-            <input id='wd-name' className='form-control' value={assignment?.title} />
+            <input
+                id='wd-name'
+                className='form-control'
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
 
             <br />
-            <textarea id='wd-description' className='form-control'>
-                {assignment?.description}
-            </textarea>
+            <textarea
+                id='wd-description'
+                className='form-control'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+            />
             <br />
 
             <div className='row mb-3'>
@@ -24,7 +46,12 @@ export default function AssignmentEditor() {
                     Points
                 </label>
                 <div className='col-sm-10'>
-                    <input id='wd-points' className='form-control' value={assignment?.points} />
+                    <input
+                        id='wd-points'
+                        className='form-control'
+                        value={points}
+                        onChange={(e) => setPoints(parseInt(e.target.value))}
+                    />
                 </div>
             </div>
 
@@ -148,7 +175,8 @@ export default function AssignmentEditor() {
                             id='wd-due-date'
                             className='form-control'
                             type='date'
-                            value={assignment?.due}
+                            value={due}
+                            onChange={(e) => setDueDate(e.target.value)}
                         />
                         <div className='row mb-3'>
                             <div className='col-sm-6'>
@@ -159,7 +187,8 @@ export default function AssignmentEditor() {
                                     id='wd-available-from'
                                     className='form-control'
                                     type='date'
-                                    value={assignment?.available}
+                                    value={availableFrom}
+                                    onChange={(e) => setAvailableFrom(e.target.value)}
                                 />
                             </div>
 
@@ -171,7 +200,8 @@ export default function AssignmentEditor() {
                                     id='wd-available-until'
                                     className='form-control'
                                     type='date'
-                                    value={assignment?.due}
+                                    value={availableTo}
+                                    onChange={(e) => setAvailableTo(e.target.value)}
                                 />
                             </div>
                         </div>
@@ -198,6 +228,31 @@ export default function AssignmentEditor() {
                                 className='form-control btn btn-sm btn-danger'
                                 type='button'
                                 value='Save'
+                                onClick={() =>
+                                    assignment
+                                        ? dispatch(
+                                              updateAssignment({
+                                                  ...assignment,
+                                                  title: title,
+                                                  description: description,
+                                                  points: points,
+                                                  due: due,
+                                                  availableFrom: availableFrom,
+                                                  availableTo: availableTo,
+                                              })
+                                          )
+                                        : dispatch(
+                                              addAssignment({
+                                                  title: title,
+                                                  course: cid,
+                                                  description: description,
+                                                  points: points,
+                                                  due: due,
+                                                  availableFrom: availableFrom,
+                                                  availableTo: availableTo,
+                                              })
+                                          )
+                                }
                             />
                         </Link>
                     </div>
