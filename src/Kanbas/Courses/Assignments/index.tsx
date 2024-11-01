@@ -35,13 +35,14 @@ export default function Assignments() {
                             <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
                             Group
                         </button>
-                        <button
+                        <Link
                             id='wd-add-assignment'
                             className='btn btn-lg btn-danger me-1 float-end'
+                            to={`/Kanbas/Courses/${cid}/Assignments/new`}
                         >
                             <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
                             Assignment
-                        </button>
+                        </Link>
                     </div>
                 </FacultyOnly>
             </div>
