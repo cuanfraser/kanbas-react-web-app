@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import * as db from '../Database';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../FacultyOnly';
+import StudentOnly from '../StudentOnly';
+import { useState } from 'react';
 export default function Dashboard({
     courses,
     course,
@@ -19,6 +21,8 @@ export default function Dashboard({
 }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { enrollments } = db;
+    const [showAll, setShowAll] = useState(false);
+
     return (
         <div id='wd-dashboard'>
             <h1 id='wd-dashboard-title'>Dashboard</h1> <hr />
@@ -53,16 +57,23 @@ export default function Dashboard({
                 />
                 <hr />
             </FacultyOnly>
+            <StudentOnly>
+                <button className='btn btn-primary float-end' onClick={() => setShowAll(!showAll)}>
+                    Enrollments
+                </button>
+            </StudentOnly>
             <h2 id='wd-dashboard-published'>Published Courses ({courses.length})</h2> <hr />
             <div id='wd-dashboard-courses' className='row'>
                 <div className='row row-cols-1 row-cols-md-5 g-4'>
                     {courses
-                        .filter((course) =>
-                            enrollments.some(
-                                (enrollment) =>
-                                    enrollment.user === currentUser._id &&
-                                    enrollment.course === course._id
-                            )
+                        .filter(
+                            (course) =>
+                                showAll ||
+                                enrollments.some(
+                                    (enrollment) =>
+                                        enrollment.user === currentUser._id &&
+                                        enrollment.course === course._id
+                                )
                         )
                         .map((course) => (
                             <div className='wd-dashboard-course col' style={{ width: '300px' }}>
@@ -86,7 +97,7 @@ export default function Dashboard({
                                             >
                                                 {course.description}
                                             </p>
-                                            <button className='btn btn-primary'> Go </button>
+                                            <button className='btn btn-primary me-2'> Go </button>
 
                                             <FacultyOnly>
                                                 <button
@@ -111,6 +122,22 @@ export default function Dashboard({
                                                     Edit
                                                 </button>
                                             </FacultyOnly>
+
+                                            <StudentOnly>
+                                                {enrollments.some(
+                                                    (enrollment) =>
+                                                        enrollment.user === currentUser._id &&
+                                                        enrollment.course === course._id
+                                                ) ? (
+                                                    <button className='btn btn-danger'>
+                                                        Unenroll
+                                                    </button>
+                                                ) : (
+                                                    <button className='btn btn-primary'>
+                                                        Enroll
+                                                    </button>
+                                                )}
+                                            </StudentOnly>
                                         </div>
                                     </Link>
                                 </div>
