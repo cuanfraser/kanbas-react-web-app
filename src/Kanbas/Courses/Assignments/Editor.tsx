@@ -1,9 +1,7 @@
 import { useParams } from 'react-router';
-
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../../FacultyOnly';
 import { useDispatch, useSelector } from 'react-redux';
-import { addModule } from '../Modules/reducer';
 import { useState } from 'react';
 import { addAssignment, updateAssignment } from './reducer';
 
