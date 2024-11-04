@@ -71,11 +71,14 @@ export default function Modules() {
                             {module.lessons && (
                                 <ul className='wd-lessons list-group rounded-0'>
                                     {module.lessons.map((lesson: any) => (
-                                        <li className='wd-lesson list-group-item p-3 ps-1'>
+                                        <li className='wd-lesson list-group-item p-3 ps-1 d-flex align-items-center'>
                                             <BsGripVertical className='me-2 fs-3' />
-                                            {lesson.name}
+                                            <p className='flex-grow-1 m-0'>{lesson.name}</p>
+
                                             <FacultyOnly>
-                                                <LessonControlButtons />
+                                                <div className='justify-content-end'>
+                                                    <LessonControlButtons />
+                                                </div>
                                             </FacultyOnly>
                                         </li>
                                     ))}
