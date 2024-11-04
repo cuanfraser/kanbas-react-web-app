@@ -1,18 +1,20 @@
-import * as db from '../../Database';
 import { BsGripVertical } from 'react-icons/bs';
 import LessonControlButtons from '../Modules/LessonControlButtons';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import { CiSearch } from 'react-icons/ci';
 import { VscNotebook } from 'react-icons/vsc';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../../FacultyOnly';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteAssignment } from './reducer';
 
 export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentReducer);
+    const dispatch = useDispatch();
+
     return (
         <div id='wd-assignments' className='text-nowrap'>
             <div id='wd-assignments-controls' className='row'>
@@ -94,8 +96,16 @@ export default function Assignments() {
                                         </div>
                                     </div>
                                     <FacultyOnly>
-                                        <div className='col-md-1'>
+                                        <div className='col-md-1 d-flex justify-content-end align-items-center'>
                                             <LessonControlButtons />
+
+                                            <FaTrash
+                                                className='text-danger'
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    dispatch(deleteAssignment(assignment._id));
+                                                }}
+                                            />
                                         </div>
                                     </FacultyOnly>
                                 </div>
