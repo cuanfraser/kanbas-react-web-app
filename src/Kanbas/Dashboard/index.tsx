@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import FacultyOnly from '../FacultyOnly';
 import StudentOnly from '../StudentOnly';
 import { useState } from 'react';
+import EnrollButtons from '../Account/Enrollments/EnrollButtons';
 export default function Dashboard({
     courses,
     course,
@@ -123,19 +124,7 @@ export default function Dashboard({
                                             </FacultyOnly>
 
                                             <StudentOnly>
-                                                {enrollments.some(
-                                                    (enrollment: any) =>
-                                                        enrollment.user === currentUser._id &&
-                                                        enrollment.course === course._id
-                                                ) ? (
-                                                    <button className='btn btn-danger'>
-                                                        Unenroll
-                                                    </button>
-                                                ) : (
-                                                    <button className='btn btn-primary'>
-                                                        Enroll
-                                                    </button>
-                                                )}
+                                                <EnrollButtons courseId={course._id} userId={currentUser._id} enrollments={enrollments} />
                                             </StudentOnly>
                                         </div>
                                     </Link>
