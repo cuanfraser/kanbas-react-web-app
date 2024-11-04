@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../FacultyOnly';
 import StudentOnly from '../StudentOnly';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EnrollButtons from '../Account/Enrollments/EnrollButtons';
 export default function Dashboard({
     courses,
@@ -22,6 +22,13 @@ export default function Dashboard({
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
     const [showAll, setShowAll] = useState(false);
+
+    useEffect(() => {
+        if (currentUser.role === "FACULTY") {
+            setShowAll(true);
+        }
+      }, [currentUser])
+    
 
     return (
         <div id='wd-dashboard'>
@@ -62,7 +69,9 @@ export default function Dashboard({
                     Enrollments
                 </button>
             </StudentOnly>
-            <h2 id='wd-dashboard-published'>Published Courses ({courses.length})</h2> <hr />
+            {showAll && <h2 id='wd-dashboard-published'>Published Courses ({courses.length})</h2>}
+            {!showAll && <h2 id='wd-dashboard-enrolled'>Enrolled Courses</h2>}
+            <hr />
             <div id='wd-dashboard-courses' className='row'>
                 <div className='row row-cols-1 row-cols-md-5 g-4'>
                     {courses
@@ -124,7 +133,11 @@ export default function Dashboard({
                                             </FacultyOnly>
 
                                             <StudentOnly>
-                                                <EnrollButtons courseId={course._id} userId={currentUser._id} enrollments={enrollments} />
+                                                <EnrollButtons
+                                                    courseId={course._id}
+                                                    userId={currentUser._id}
+                                                    enrollments={enrollments}
+                                                />
                                             </StudentOnly>
                                         </div>
                                     </Link>
