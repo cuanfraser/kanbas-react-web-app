@@ -7,6 +7,7 @@ import Courses from './Courses';
 import * as db from './Database';
 import { useState } from 'react';
 import ProtectedRoute from './Account/ProtectedRoute';
+import EnrollmentRoutes from './Account/Enrollments/EnrollmentRoutes';
 export default function Kanbas() {
     const [courses, setCourses] = useState<any[]>(db.courses);
     const [course, setCourse] = useState<any>({
@@ -60,9 +61,9 @@ export default function Kanbas() {
                     <Route
                         path='/Courses/:cid/*'
                         element={
-                            <ProtectedRoute>
+                            <EnrollmentRoutes>
                                 <Courses courses={courses} />
-                            </ProtectedRoute>
+                            </EnrollmentRoutes>
                         }
                     />
                     <Route path='/Calendar' element={<h1>Calendar</h1>} />
