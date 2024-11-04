@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import * as db from '../Database';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../FacultyOnly';
 import StudentOnly from '../StudentOnly';
@@ -20,7 +19,7 @@ export default function Dashboard({
     updateCourse: () => void;
 }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const { enrollments } = db;
+    const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
     const [showAll, setShowAll] = useState(false);
 
     return (
@@ -70,7 +69,7 @@ export default function Dashboard({
                             (course) =>
                                 showAll ||
                                 enrollments.some(
-                                    (enrollment) =>
+                                    (enrollment: any) =>
                                         enrollment.user === currentUser._id &&
                                         enrollment.course === course._id
                                 )
@@ -125,7 +124,7 @@ export default function Dashboard({
 
                                             <StudentOnly>
                                                 {enrollments.some(
-                                                    (enrollment) =>
+                                                    (enrollment: any) =>
                                                         enrollment.user === currentUser._id &&
                                                         enrollment.course === course._id
                                                 ) ? (
