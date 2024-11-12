@@ -1,16 +1,20 @@
-import * as db from '../../Database';
 import { BsGripVertical } from 'react-icons/bs';
 import LessonControlButtons from '../Modules/LessonControlButtons';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import { CiSearch } from 'react-icons/ci';
 import { VscNotebook } from 'react-icons/vsc';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import FacultyOnly from '../../FacultyOnly';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteAssignment } from './reducer';
 
 export default function Assignments() {
     const { cid } = useParams();
-    const assignments = db.assignments;
+    const { assignments } = useSelector((state: any) => state.assignmentReducer);
+    const dispatch = useDispatch();
+
     return (
         <div id='wd-assignments' className='text-nowrap'>
             <div id='wd-assignments-controls' className='row'>
@@ -25,19 +29,25 @@ export default function Assignments() {
                     />
                 </div>
 
-                <div className='col-sm-5'>
-                    <button
-                        id='wd-add-assignment-group'
-                        className='btn btn-lg btn-secondary me-1 float-end'
-                    >
-                        <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
-                        Group
-                    </button>
-                    <button id='wd-add-assignment' className='btn btn-lg btn-danger me-1 float-end'>
-                        <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
-                        Assignment
-                    </button>
-                </div>
+                <FacultyOnly>
+                    <div className='col-sm-5'>
+                        <button
+                            id='wd-add-assignment-group'
+                            className='btn btn-lg btn-secondary me-1 float-end'
+                        >
+                            <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
+                            Group
+                        </button>
+                        <Link
+                            id='wd-add-assignment'
+                            className='btn btn-lg btn-danger me-1 float-end'
+                            to={`/Kanbas/Courses/${cid}/Assignments/new`}
+                        >
+                            <FaPlus className='position-relative me-2' style={{ bottom: '1px' }} />
+                            Assignment
+                        </Link>
+                    </div>
+                </FacultyOnly>
             </div>
 
             <ul id='wd-assignment-list' className='list-group rounded-0'>
@@ -45,8 +55,10 @@ export default function Assignments() {
                     <div className='wd-title wd-title p-3 ps-2 bg-secondary'>
                         <BsGripVertical className='me-2 fs-3' />
                         ASSIGNMENTS
-                        <IoEllipsisVertical className='fs-4 float-end' />
-                        <FaPlus className='me-2 float-end ' style={{ bottom: '1px' }} />
+                        <FacultyOnly>
+                            <IoEllipsisVertical className='fs-4 float-end' />
+                            <FaPlus className='me-2 float-end ' style={{ bottom: '1px' }} />
+                        </FacultyOnly>
                         <button className='btn btn-sm btn-secondary float-end'>40% of Total</button>
                     </div>
                 </li>
@@ -74,14 +86,28 @@ export default function Assignments() {
                                             <h2>{assignment.title}</h2>
                                         </a>
                                         <div className='d-flex flex-row'>
-                                            <p className='text-success'>{assignment.modules} Modules | </p>
+                                            <p className='text-success'>
+                                                {assignment.modules} Modules |{' '}
+                                            </p>
                                             <p> Not available until {assignment.available} | </p>
-                                            <p>Due {assignment.due} | {assignment.points} pts</p>
+                                            <p>
+                                                Due {assignment.due} | {assignment.points} pts
+                                            </p>
                                         </div>
                                     </div>
-                                    <div className='col-md-1'>
-                                        <LessonControlButtons />
-                                    </div>
+                                    <FacultyOnly>
+                                        <div className='col-md-1 d-flex justify-content-end align-items-center'>
+                                            <LessonControlButtons />
+
+                                            <FaTrash
+                                                className='text-danger'
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    dispatch(deleteAssignment(assignment._id));
+                                                }}
+                                            />
+                                        </div>
+                                    </FacultyOnly>
                                 </div>
                             </li>
                         </Link>
