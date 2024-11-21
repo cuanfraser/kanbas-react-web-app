@@ -80,6 +80,49 @@ export default function WorkingWithArrays() {
             <br />
             <br />
             <hr />
+
+            <h3>Updating Completed</h3>
+            <a
+                href={`${API}/${todo.id}/completed/${todo.completed}`}
+                className='btn btn-primary float-end'
+            >
+                Update Completed
+            </a>
+            <input
+                defaultValue={todo.id}
+                className='form-control w-25 float-start me-2'
+                onChange={(e) => setTodo({ ...todo, id: e.target.value })}
+            />
+            <input
+                type='checkbox'
+                defaultChecked={todo.completed}
+                className='form-check-input float-start'
+                onChange={(e) => setTodo({ ...todo, completed: e.target.checked })}
+            />
+            <br />
+            <br />
+            <hr />
+
+            <h3>Updating Description</h3>
+            <a
+                href={`${API}/${todo.id}/description/${todo.description}`}
+                className='btn btn-primary float-end'
+            >
+                Update Description
+            </a>
+            <input
+                defaultValue={todo.id}
+                className='form-control w-25 float-start me-2'
+                onChange={(e) => setTodo({ ...todo, id: e.target.value })}
+            />
+            <input
+                defaultValue={todo.description}
+                className='form-control w-50 float-start'
+                onChange={(e) => setTodo({ ...todo, description: e.target.value })}
+            />
+            <br />
+            <br />
+            <hr />
         </div>
     );
 }
