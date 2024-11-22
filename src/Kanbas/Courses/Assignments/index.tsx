@@ -8,12 +8,21 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../../FacultyOnly';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAssignment } from './reducer';
+import { deleteAssignment, setAssignments } from './reducer';
+import * as coursesClient from '../client';
+import { useEffect } from 'react';
 
 export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentReducer);
     const dispatch = useDispatch();
+    const fetchAssignments = async () => {
+        const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+        dispatch(setAssignments(assignments));
+    };
+    useEffect(() => {
+        fetchAssignments();
+    }, []);
 
     return (
         <div id='wd-assignments' className='text-nowrap'>
