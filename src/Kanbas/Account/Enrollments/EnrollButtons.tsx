@@ -1,16 +1,16 @@
-import { useDispatch } from 'react-redux';
-import { addEnrollment, deleteEnrollment } from './reducer';
-
 export default function EnrollButtons({
     courseId,
     userId,
     enrollments,
+    unenroll,
+    enroll
 }: {
     courseId: string;
     userId: string;
     enrollments: any[];
+    unenroll: (enrollmentId: string) => void;
+    enroll: (course: string) => void;
 }) {
-    const dispatch = useDispatch();
     const enrollment = enrollments.find(
         (enrollment: any) => enrollment.user === userId && enrollment.course === courseId
     );
@@ -20,7 +20,7 @@ export default function EnrollButtons({
                 className='btn btn-danger'
                 onClick={(e) => {
                     e.preventDefault();
-                    dispatch(deleteEnrollment(enrollment._id));
+                    unenroll(enrollment._id);
                 }}
             >
                 Unenroll
@@ -32,7 +32,7 @@ export default function EnrollButtons({
                 className='btn btn-primary'
                 onClick={(e) => {
                     e.preventDefault();
-                    dispatch(addEnrollment({ user: userId, course: courseId }));
+                    enroll(courseId);
                 }}
             >
                 Enroll
