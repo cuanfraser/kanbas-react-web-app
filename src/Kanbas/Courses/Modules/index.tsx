@@ -3,9 +3,10 @@ import LessonControlButtons from './LessonControlButtons';
 import ModuleControlButtons from './ModuleControlButtons';
 import ModulesControls from './ModulesControls';
 import { BsGripVertical } from 'react-icons/bs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addModule, deleteModule, editModule, updateModule } from './reducer';
+import { addModule, deleteModule, editModule, updateModule, setModules } from './reducer';
+import * as coursesClient from '../client';
 import FacultyOnly from '../../FacultyOnly';
 
 export default function Modules() {
@@ -13,6 +14,13 @@ export default function Modules() {
     const [moduleName, setModuleName] = useState('');
     const { modules } = useSelector((state: any) => state.modulesReducer);
     const dispatch = useDispatch();
+    const fetchModules = async () => {
+        const modules = await coursesClient.findModulesForCourse(cid as string);
+        dispatch(setModules(modules));
+    };
+    useEffect(() => {
+        fetchModules();
+    }, []);
 
     return (
         <div>
@@ -33,7 +41,6 @@ export default function Modules() {
 
             <ul id='wd-modules' className='list-group rounded-0'>
                 {modules
-                    .filter((module: any) => module.course === cid)
                     .map((module: any) => (
                         <li className='wd-module list-group-item p-0 mb-5 fs-5 border-gray'>
                             <div className='wd-title wd-title p-3 ps-2 bg-secondary'>
