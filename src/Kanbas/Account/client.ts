@@ -43,9 +43,7 @@ export const findUserEnrollments = async () => {
     return data;
 };
 
-export const enrollUserInCourse = async (courseId: string) => {
-    const { data } = await axiosWithCredentials.post(`${USERS_API}/current/enrollments`, {
-        course: courseId,
-    });
+export const enrollUserInCourse = async (course: any) => {
+    const { data } = await axiosWithCredentials.post(`${USERS_API}/current/enrollments`, course);
     return data;
 };

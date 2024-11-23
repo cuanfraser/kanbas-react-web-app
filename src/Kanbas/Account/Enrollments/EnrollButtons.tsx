@@ -1,18 +1,18 @@
 export default function EnrollButtons({
-    courseId,
+    course,
     userId,
     enrollments,
     unenroll,
     enroll
 }: {
-    courseId: string;
+    course: any;
     userId: string;
     enrollments: any[];
-    unenroll: (enrollmentId: string) => void;
+    unenroll: (enrollmentId: string, course: any) => void;
     enroll: (course: string) => void;
 }) {
     const enrollment = enrollments.find(
-        (enrollment: any) => enrollment.user === userId && enrollment.course === courseId
+        (enrollment: any) => enrollment.user === userId && enrollment.course === course._id
     );
     if (enrollment) {
         return (
@@ -20,7 +20,7 @@ export default function EnrollButtons({
                 className='btn btn-danger'
                 onClick={(e) => {
                     e.preventDefault();
-                    unenroll(enrollment._id);
+                    unenroll(enrollment._id, course);
                 }}
             >
                 Unenroll
@@ -32,7 +32,7 @@ export default function EnrollButtons({
                 className='btn btn-primary'
                 onClick={(e) => {
                     e.preventDefault();
-                    enroll(courseId);
+                    enroll(course);
                 }}
             >
                 Enroll

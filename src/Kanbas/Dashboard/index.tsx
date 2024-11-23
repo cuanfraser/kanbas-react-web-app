@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../FacultyOnly';
 import StudentOnly from '../StudentOnly';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import EnrollButtons from '../Account/Enrollments/EnrollButtons';
 import * as accountClient from '../Account/client';
 import * as enrollmentClient from '../Account/Enrollments/client';
@@ -11,6 +11,7 @@ import { addEnrollment, deleteEnrollment, setEnrollments } from '../Account/Enro
 export default function Dashboard({
     allCourses,
     usersCourses,
+    setUserCourses,
     course,
     setCourse,
     addNewCourse,
@@ -19,6 +20,7 @@ export default function Dashboard({
 }: {
     allCourses: any[];
     usersCourses: any[];
+    setUserCourses: (courses: any[]) => void;
     course: any;
     setCourse: (course: any) => void;
     addNewCourse: () => void;
@@ -31,22 +33,19 @@ export default function Dashboard({
     const dispatch = useDispatch();
     const [showAll, setShowAll] = useState(false);
 
-    const fetchEnrollments = async () => {
-        const enrollments = await accountClient.findUserEnrollments();
-        dispatch(setEnrollments(enrollments));
-    };
-
-    const enroll = async (courseId: string) => {
-        const newEnrollment = await accountClient.enrollUserInCourse(courseId);
+    const enroll = async (course: any) => {
+        const newEnrollment = await accountClient.enrollUserInCourse(course);
         dispatch(addEnrollment(newEnrollment));
+        setUserCourses([...usersCourses, course]);
     };
 
-    const unenroll = async (enrollmentId: string) => {
+    const unenroll = async (enrollmentId: string, course: any) => {
         await enrollmentClient.deleteEnrollment(enrollmentId);
         dispatch(deleteEnrollment(enrollmentId));
+        setUserCourses(usersCourses.filter((current) => current._id !== course._id));
     };
 
-    const toggleEnrollmentView = () => {
+    const toggleEnrollmentView = useCallback (() => {
         if (showAll) {
             setCourses(usersCourses);
             setShowAll(false);
@@ -54,14 +53,18 @@ export default function Dashboard({
             setCourses(allCourses);
             setShowAll(true);
         }
-    };
+    }, [allCourses, showAll, usersCourses]);;
 
     useEffect(() => {
         if (currentUser.role === 'FACULTY') {
             toggleEnrollmentView();
         }
+        const fetchEnrollments = async () => {
+            const enrollments = await accountClient.findUserEnrollments();
+            dispatch(setEnrollments(enrollments));
+        };
         fetchEnrollments();
-    }, [currentUser.role]);
+    }, [currentUser.role, dispatch, toggleEnrollmentView]);
 
     return (
         <div id='wd-dashboard'>
@@ -108,7 +111,7 @@ export default function Dashboard({
             <div id='wd-dashboard-courses' className='row'>
                 <div className='row row-cols-1 row-cols-md-5 g-4'>
                     {courses.map((course) => (
-                        <div className='wd-dashboard-course col' style={{ width: '300px' }}>
+                        <div className='wd-dashboard-course col' style={{ width: '300px' }} key={course._id}>
                             <div className='card rounded-3 overflow-hidden'>
                                 <Link
                                     className='wd-dashboard-course-link text-decoration-none text-dark'
@@ -157,7 +160,7 @@ export default function Dashboard({
 
                                         <StudentOnly>
                                             <EnrollButtons
-                                                courseId={course._id}
+                                                course={course}
                                                 userId={currentUser._id}
                                                 enrollments={enrollments}
                                                 unenroll={unenroll}
