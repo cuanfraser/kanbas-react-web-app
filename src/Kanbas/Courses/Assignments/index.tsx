@@ -8,12 +8,28 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import FacultyOnly from '../../FacultyOnly';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAssignment } from './reducer';
+import { deleteAssignment, setAssignments } from './reducer';
+import * as coursesClient from '../client';
+import * as assignmentClient from './client';
+import { useEffect } from 'react';
 
 export default function Assignments() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentReducer);
     const dispatch = useDispatch();
+
+    const fetchAssignments = async () => {
+        const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+        dispatch(setAssignments(assignments));
+    };
+    useEffect(() => {
+        fetchAssignments();
+    }, []);
+
+    const removeAssignment = async (assignmentId: string) => {
+        await assignmentClient.deleteAssignment(assignmentId);
+        dispatch(deleteAssignment(assignmentId));
+    };
 
     return (
         <div id='wd-assignments' className='text-nowrap'>
@@ -63,55 +79,53 @@ export default function Assignments() {
                     </div>
                 </li>
 
-                {assignments
-                    .filter((assignment: any) => assignment.course === cid)
-                    .map((assignment: any) => (
-                        <Link
-                            key={assignment._id}
-                            to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
-                            className='text-decoration-none'
-                        >
-                            <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
-                                <div className='row align-items-center'>
-                                    <div className='col-md-1'>
-                                        <BsGripVertical className='fs-3' />
-                                        <VscNotebook className='fs-3 text-success' />
-                                    </div>
-
-                                    <div className='col-md-10'>
-                                        <a
-                                            className='wd-assignment-link text-dark text-bold text-decoration-none'
-                                            href='#/Kanbas/Courses/1234/Assignments/A1'
-                                        >
-                                            <h2>{assignment.title}</h2>
-                                        </a>
-                                        <div className='d-flex flex-row'>
-                                            <p className='text-success'>
-                                                {assignment.modules} Modules |{' '}
-                                            </p>
-                                            <p> Not available until {assignment.available} | </p>
-                                            <p>
-                                                Due {assignment.due} | {assignment.points} pts
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <FacultyOnly>
-                                        <div className='col-md-1 d-flex justify-content-end align-items-center'>
-                                            <LessonControlButtons />
-
-                                            <FaTrash
-                                                className='text-danger'
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    dispatch(deleteAssignment(assignment._id));
-                                                }}
-                                            />
-                                        </div>
-                                    </FacultyOnly>
+                {assignments.map((assignment: any) => (
+                    <Link
+                        key={assignment._id}
+                        to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                        className='text-decoration-none'
+                    >
+                        <li className='wd-assignment-list-item wd-lesson list-group-item p-3 ps-1'>
+                            <div className='row align-items-center'>
+                                <div className='col-md-1'>
+                                    <BsGripVertical className='fs-3' />
+                                    <VscNotebook className='fs-3 text-success' />
                                 </div>
-                            </li>
-                        </Link>
-                    ))}
+
+                                <div className='col-md-10'>
+                                    <a
+                                        className='wd-assignment-link text-dark text-bold text-decoration-none'
+                                        href='#/Kanbas/Courses/1234/Assignments/A1'
+                                    >
+                                        <h2>{assignment.title}</h2>
+                                    </a>
+                                    <div className='d-flex flex-row'>
+                                        <p className='text-success'>
+                                            {assignment.modules} Modules |{' '}
+                                        </p>
+                                        <p> Not available until {assignment.available} | </p>
+                                        <p>
+                                            Due {assignment.due} | {assignment.points} pts
+                                        </p>
+                                    </div>
+                                </div>
+                                <FacultyOnly>
+                                    <div className='col-md-1 d-flex justify-content-end align-items-center'>
+                                        <LessonControlButtons />
+
+                                        <FaTrash
+                                            className='text-danger'
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                removeAssignment(assignment._id);
+                                            }}
+                                        />
+                                    </div>
+                                </FacultyOnly>
+                            </div>
+                        </li>
+                    </Link>
+                ))}
             </ul>
         </div>
     );

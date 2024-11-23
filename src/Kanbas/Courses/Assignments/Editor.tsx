@@ -4,12 +4,24 @@ import FacultyOnly from '../../FacultyOnly';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { addAssignment, updateAssignment } from './reducer';
+import * as coursesClient from '../client';
+import * as assignmentClient from './client';
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentReducer);
     const assignment = assignments.find((assignment: any) => assignment._id === aid);
     const dispatch = useDispatch();
+
+    const createAssignmentForCourse = async (newAssignment: any) => {
+        if (!cid) return;
+        const assignment = await coursesClient.createAssignmentForCourse(cid, newAssignment);
+        dispatch(addAssignment(assignment));
+    };
+    const saveAssignment = async (assignment: any) => {
+        await assignmentClient.updateAssignment(assignment);
+        dispatch(updateAssignment(assignment));
+    };
 
     const [title, setTitle] = useState(assignment ? assignment.title : '');
     const [description, setDescription] = useState(assignment ? assignment.description : '');
@@ -228,28 +240,23 @@ export default function AssignmentEditor() {
                                 value='Save'
                                 onClick={() =>
                                     assignment
-                                        ? dispatch(
-                                              updateAssignment({
-                                                  ...assignment,
-                                                  title: title,
-                                                  description: description,
-                                                  points: points,
-                                                  due: due,
-                                                  availableFrom: availableFrom,
-                                                  availableTo: availableTo,
-                                              })
-                                          )
-                                        : dispatch(
-                                              addAssignment({
-                                                  title: title,
-                                                  course: cid,
-                                                  description: description,
-                                                  points: points,
-                                                  due: due,
-                                                  availableFrom: availableFrom,
-                                                  availableTo: availableTo,
-                                              })
-                                          )
+                                        ? saveAssignment({
+                                              ...assignment,
+                                              title: title,
+                                              description: description,
+                                              points: points,
+                                              due: due,
+                                              availableFrom: availableFrom,
+                                              availableTo: availableTo,
+                                          })
+                                        : createAssignmentForCourse({
+                                              title: title,
+                                              description: description,
+                                              points: points,
+                                              due: due,
+                                              availableFrom: availableFrom,
+                                              availableTo: availableTo,
+                                          })
                                 }
                             />
                         </Link>
