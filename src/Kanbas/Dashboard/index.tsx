@@ -9,20 +9,23 @@ import * as enrollmentClient from '../Account/Enrollments/client';
 import { addEnrollment, deleteEnrollment, setEnrollments } from '../Account/Enrollments/reducer';
 
 export default function Dashboard({
-    courses,
+    allCourses,
+    usersCourses,
     course,
     setCourse,
     addNewCourse,
     deleteCourse,
     updateCourse,
 }: {
-    courses: any[];
+    allCourses: any[];
+    usersCourses: any[];
     course: any;
     setCourse: (course: any) => void;
     addNewCourse: () => void;
     deleteCourse: (course: any) => void;
     updateCourse: () => void;
 }) {
+    const [courses, setCourses] = useState(usersCourses);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
     const dispatch = useDispatch();
@@ -36,16 +39,26 @@ export default function Dashboard({
     const enroll = async (courseId: string) => {
         const newEnrollment = await accountClient.enrollUserInCourse(courseId);
         dispatch(addEnrollment(newEnrollment));
-    }
+    };
 
     const unenroll = async (enrollmentId: string) => {
         await enrollmentClient.deleteEnrollment(enrollmentId);
         dispatch(deleteEnrollment(enrollmentId));
-    }
+    };
+
+    const toggleEnrollmentView = () => {
+        if (showAll) {
+            setCourses(usersCourses);
+            setShowAll(false);
+        } else {
+            setCourses(allCourses);
+            setShowAll(true);
+        }
+    };
 
     useEffect(() => {
         if (currentUser.role === 'FACULTY') {
-            setShowAll(true);
+            toggleEnrollmentView();
         }
         fetchEnrollments();
     }, [currentUser.role]);
@@ -85,7 +98,7 @@ export default function Dashboard({
                 <hr />
             </FacultyOnly>
             <StudentOnly>
-                <button className='btn btn-primary float-end' onClick={() => setShowAll(!showAll)}>
+                <button className='btn btn-primary float-end' onClick={() => toggleEnrollmentView()}>
                     Enrollments
                 </button>
             </StudentOnly>

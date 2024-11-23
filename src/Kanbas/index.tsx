@@ -13,6 +13,7 @@ import Session from './Account/Session';
 import { useSelector } from 'react-redux';
 export default function Kanbas() {
     const [courses, setCourses] = useState<any[]>([]);
+    const [allCourses, setAllCourses] = useState<any[]>([]);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const fetchCourses = async () => {
         try {
@@ -22,8 +23,13 @@ export default function Kanbas() {
             console.error(error);
         }
     };
+    const fetchAllCourses = async () => {
+        const courses = await courseClient.fetchAllCourses();
+        setAllCourses(courses);
+    };
     useEffect(() => {
         fetchCourses();
+        fetchAllCourses();
     }, [currentUser]);
 
     const [course, setCourse] = useState<any>({
@@ -68,7 +74,8 @@ export default function Kanbas() {
                             element={
                                 <ProtectedRoute>
                                     <Dashboard
-                                        courses={courses}
+                                        allCourses={allCourses}
+                                        usersCourses={courses}
                                         course={course}
                                         setCourse={setCourse}
                                         addNewCourse={addNewCourse}
