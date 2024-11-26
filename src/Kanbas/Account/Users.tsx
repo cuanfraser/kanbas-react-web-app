@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import PeopleTable from '../Courses/People/Table';
 import * as client from './client';
+import { FaPlus } from 'react-icons/fa';
 export default function Users() {
     const [users, setUsers] = useState<any[]>([]);
     const { uid } = useParams();
@@ -28,15 +29,34 @@ export default function Users() {
         }
     };
 
+    const createUser = async () => {
+        const user = await client.createUser({
+            firstName: 'New',
+            lastName: `User${users.length + 1}`,
+            username: `newuser${Date.now()}`,
+            password: 'password123',
+            email: `email${users.length + 1}@neu.edu`,
+            section: 'S101',
+            role: 'STUDENT',
+        });
+        setUsers([...users, user]);
+    };
+
     const fetchUsers = async () => {
         const users = await client.findAllUsers();
         setUsers(users);
     };
+
     useEffect(() => {
         fetchUsers();
     }, [uid]);
     return (
         <div>
+            <button onClick={createUser} className='float-end btn btn-danger wd-add-people'>
+                <FaPlus className='me-2' />
+                Users
+            </button>
+            
             <h3>Users</h3>
             <input
                 onChange={(e) => filterUsersByName(e.target.value)}
