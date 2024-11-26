@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaCheck, FaUserCircle } from 'react-icons/fa';
 import { IoCloseSharp } from 'react-icons/io5';
 import { useParams, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import * as client from '../../Account/client';
+import { FaPencil } from 'react-icons/fa6';
 export default function PeopleDetails() {
     const { uid } = useParams();
-    const [user, setUser] = useState<any>({});
     const navigate = useNavigate();
+    const [user, setUser] = useState<any>({});
+    const [name, setName] = useState('');
+    const [editing, setEditing] = useState(false);
 
     const fetchUser = async () => {
         if (!uid) return;
@@ -17,6 +20,15 @@ export default function PeopleDetails() {
 
     const deleteUser = async (uid: string) => {
         await client.deleteUser(uid);
+        navigate(-1);
+    };
+
+    const saveUser = async () => {
+        const [firstName, lastName] = name.split(' ');
+        const updatedUser = { ...user, firstName, lastName };
+        await client.updateUser(updatedUser);
+        setUser(updatedUser);
+        setEditing(false);
         navigate(-1);
     };
 
@@ -39,13 +51,40 @@ export default function PeopleDetails() {
             </div>
             <hr />
             <div className='text-danger fs-4 wd-name'>
-                {user.firstName} {user.lastName}
+                {!editing && (
+                    <FaPencil
+                        onClick={() => setEditing(true)}
+                        className='float-end fs-5 mt-2 wd-edit'
+                    />
+                )}
+                {editing && (
+                    <FaCheck
+                        onClick={() => saveUser()}
+                        className='float-end fs-5 mt-2 me-2 wd-save'
+                    />
+                )}
+                {!editing && (
+                    <div className='wd-name' onClick={() => setEditing(true)}>
+                        {user.firstName} {user.lastName}
+                    </div>
+                )}
+                {user && editing && (
+                    <input
+                        className='form-control w-50 wd-edit-name'
+                        defaultValue={`${user.firstName} ${user.lastName}`}
+                        onChange={(e) => setName(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                saveUser();
+                            }
+                        }}
+                    />
+                )}
             </div>
             <b>Roles:</b> <span className='wd-roles'> {user.role} </span> <br />
             <b>Login ID:</b> <span className='wd-login-id'> {user.loginId} </span> <br />
             <b>Section:</b> <span className='wd-section'> {user.section} </span> <br />
             <b>Total Activity:</b> <span className='wd-total-activity'>{user.totalActivity}</span>
-            
             <hr />
             <button onClick={() => deleteUser(uid)} className='btn btn-danger float-end wd-delete'>
                 Delete
