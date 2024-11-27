@@ -1,26 +1,17 @@
 export default function EnrollButtons({
     course,
-    userId,
-    enrollments,
-    unenroll,
-    enroll
+    updateEnrollment,
 }: {
     course: any;
-    userId: string;
-    enrollments: any[];
-    unenroll: (enrollmentId: string, course: any) => void;
-    enroll: (course: string) => void;
+    updateEnrollment: (courseId: string, enrolled: boolean) => void;
 }) {
-    const enrollment = enrollments.find(
-        (enrollment: any) => enrollment.user === userId && enrollment.course === course._id
-    );
-    if (enrollment) {
+    if (course.enrolled) {
         return (
             <button
                 className='btn btn-danger'
                 onClick={(e) => {
                     e.preventDefault();
-                    unenroll(enrollment._id, course);
+                    updateEnrollment(course._id, !course.enrolled);
                 }}
             >
                 Unenroll
@@ -32,7 +23,7 @@ export default function EnrollButtons({
                 className='btn btn-primary'
                 onClick={(e) => {
                     e.preventDefault();
-                    enroll(course);
+                    updateEnrollment(course._id, !course.enrolled);
                 }}
             >
                 Enroll
