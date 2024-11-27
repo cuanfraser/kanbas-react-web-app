@@ -93,12 +93,7 @@ export default function Assignments() {
                                 </div>
 
                                 <div className='col-md-10'>
-                                    <a
-                                        className='wd-assignment-link text-dark text-bold text-decoration-none'
-                                        href='#/Kanbas/Courses/1234/Assignments/A1'
-                                    >
-                                        <h2>{assignment.title}</h2>
-                                    </a>
+                                    <h2>{assignment.title}</h2>
                                     <div className='d-flex flex-row'>
                                         <p className='text-success'>
                                             {assignment.modules} Modules |{' '}

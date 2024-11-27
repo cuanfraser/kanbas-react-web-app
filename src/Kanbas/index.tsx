@@ -68,7 +68,6 @@ export default function Kanbas() {
     }, [currentUser, enrolling]);
 
     const [course, setCourse] = useState<any>({
-        _id: '1234',
         name: 'New Course',
         number: 'New Number',
         startDate: '2023-09-10',
@@ -77,7 +76,7 @@ export default function Kanbas() {
     });
     const addNewCourse = async () => {
         const newCourse = await courseClient.createCourse(course);
-        setCourses([...courses, { ...course, newCourse }]);
+        setCourses([...courses, newCourse]);
     };
     const deleteCourse = async (courseId: any) => {
         const status = await courseClient.deleteCourse(courseId);
