@@ -45,26 +45,24 @@ export default function Dashboard({
         setUserCourses(usersCourses.filter((current) => current._id !== course._id));
     };
 
-    const toggleEnrollmentView = useCallback (() => {
-        if (showAll) {
-            setCourses(usersCourses);
-            setShowAll(false);
-        } else {
-            setCourses(allCourses);
-            setShowAll(true);
-        }
-    }, [allCourses, showAll, usersCourses]);;
-
     useEffect(() => {
-        if (currentUser.role === 'FACULTY') {
-            toggleEnrollmentView();
-        }
         const fetchEnrollments = async () => {
             const enrollments = await accountClient.findUserEnrollments();
             dispatch(setEnrollments(enrollments));
         };
         fetchEnrollments();
-    }, [currentUser.role, dispatch, toggleEnrollmentView]);
+
+        if (currentUser.role === 'FACULTY' && showAll === false) {
+            setShowAll(true);
+        }
+
+        if (showAll) {
+            setCourses(allCourses);
+        } else {
+            setCourses(usersCourses);
+        }
+        
+    }, [currentUser, dispatch, showAll, allCourses, usersCourses]);
 
     return (
         <div id='wd-dashboard'>
@@ -101,7 +99,7 @@ export default function Dashboard({
                 <hr />
             </FacultyOnly>
             <StudentOnly>
-                <button className='btn btn-primary float-end' onClick={() => toggleEnrollmentView()}>
+                <button className='btn btn-primary float-end' onClick={() => setShowAll(!showAll)}>
                     Enrollments
                 </button>
             </StudentOnly>
