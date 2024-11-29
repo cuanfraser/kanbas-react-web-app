@@ -54,7 +54,7 @@ export default function Modules() {
 
             <ul id='wd-modules' className='list-group rounded-0'>
                 {modules.map((module: any) => (
-                    <li className='wd-module list-group-item p-0 mb-5 fs-5 border-gray'>
+                    <li className='wd-module list-group-item p-0 mb-5 fs-5 border-gray' key={module._id}>
                         <div className='wd-title wd-title p-3 ps-2 bg-secondary'>
                             <BsGripVertical className='me-2 fs-3' />
                             {!module.editing && module.name}

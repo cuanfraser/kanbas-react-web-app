@@ -71,7 +71,7 @@ export default function AssignmentEditor() {
                 </label>
                 <div className='col-sm-10'>
                     <select id='wd-group' className='form-select'>
-                        <option value='assignments'>Assignments</option>
+                        <option defaultValue='assignments'>Assignments</option>
                     </select>
                 </div>
             </div>
@@ -82,8 +82,8 @@ export default function AssignmentEditor() {
                 </label>
                 <div className='col-sm-10'>
                     <select id='wd-display-grade-as' className='form-select'>
-                        <option value='percentage'>Percentage</option>
-                        <option value='number'>Number</option>
+                        <option defaultValue='percentage'>Percentage</option>
+                        <option defaultValue='number'>Number</option>
                     </select>
                 </div>
             </div>
@@ -96,7 +96,7 @@ export default function AssignmentEditor() {
                 <div id='wd-entry-options' className='col-sm-10 '>
                     <div className='form-control'>
                         <select id='wd-submission-type' className='form-select'>
-                            <option value='online'>Online</option>
+                            <option defaultValue='online'>Online</option>
                         </select>
 
                         <label htmlFor='wd-text-entry' className='form-label'>
@@ -111,7 +111,7 @@ export default function AssignmentEditor() {
                                 id='wd-text-entry'
                                 className='form-check-input'
                                 type='checkbox'
-                                value={'Text Entry'}
+                                defaultValue={'Text Entry'}
                             />
                         </div>
 
@@ -123,7 +123,7 @@ export default function AssignmentEditor() {
                                 id='wd-website-url'
                                 className='form-check-input'
                                 type='checkbox'
-                                value={'Website URL'}
+                                defaultValue={'Website URL'}
                             />
                         </div>
 
@@ -135,7 +135,7 @@ export default function AssignmentEditor() {
                                 id='wd-media-recordings'
                                 className='form-check-input'
                                 type='checkbox'
-                                value={'Media Recordings'}
+                                defaultValue={'Media Recordings'}
                             />
                         </div>
 
@@ -147,7 +147,7 @@ export default function AssignmentEditor() {
                                 id='wd-student-annotation'
                                 className='form-check-input'
                                 type='checkbox'
-                                value={'Student Annotation'}
+                                defaultValue={'Student Annotation'}
                             />
                         </div>
 
@@ -159,7 +159,7 @@ export default function AssignmentEditor() {
                                 id='wd-file-upload'
                                 className='form-check-input'
                                 type='checkbox'
-                                value={'File Uploads'}
+                                defaultValue={'File Uploads'}
                             />
                         </div>
                     </div>
@@ -177,7 +177,7 @@ export default function AssignmentEditor() {
                             Assign to
                         </label>
 
-                        <input id='wd-assign-to' className='form-control' value={'Everyone'} />
+                        <input id='wd-assign-to' className='form-control' defaultValue={'Everyone'} />
                         <label htmlFor='wd-due-date' className='form-label'>
                             Due
                         </label>
@@ -227,7 +227,7 @@ export default function AssignmentEditor() {
                                 id='wd-cancel'
                                 className='form-control btn btn-sm'
                                 type='button'
-                                value='Cancel'
+                                defaultValue='Cancel'
                             />
                         </Link>
                     </div>
@@ -241,22 +241,22 @@ export default function AssignmentEditor() {
                                 onClick={() =>
                                     assignment
                                         ? saveAssignment({
-                                              ...assignment,
-                                              title: title,
-                                              description: description,
-                                              points: points,
-                                              due: due,
-                                              availableFrom: availableFrom,
-                                              availableTo: availableTo,
-                                          })
+                                            ...assignment,
+                                            title: title,
+                                            description: description,
+                                            points: points,
+                                            due: due,
+                                            availableFrom: availableFrom,
+                                            availableTo: availableTo,
+                                        })
                                         : createAssignmentForCourse({
-                                              title: title,
-                                              description: description,
-                                              points: points,
-                                              due: due,
-                                              availableFrom: availableFrom,
-                                              availableTo: availableTo,
-                                          })
+                                            title: title,
+                                            description: description,
+                                            points: points,
+                                            due: due,
+                                            availableFrom: availableFrom,
+                                            availableTo: availableTo,
+                                        })
                                 }
                             />
                         </Link>

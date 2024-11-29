@@ -1,12 +1,7 @@
-import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
-export default function EnrollmentRoutes({ children }: { children: any }) {
-    const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
+export default function EnrollmentRoutes({ children, userCourses }: { children: any; userCourses: any[] }) {
     const { cid } = useParams();
-    const enrollment = enrollments.find(
-        (enrollment: any) => enrollment.user === currentUser._id && enrollment.course === cid
-    );
+    const enrollment = userCourses.find(course => course._id === cid);
 
     if (enrollment) {
         return children;
