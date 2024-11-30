@@ -72,6 +72,7 @@ export default function Profile() {
                         onChange={(e) => setProfile({ ...profile, role: e.target.value })}
                         className='form-control mb-2'
                         id='wd-role'
+                        value={profile.role}
                     >
                         <option value='USER'>User</option>
                         <option value='ADMIN'>Admin</option>
@@ -79,8 +80,7 @@ export default function Profile() {
                         <option value='STUDENT'>Student</option>
                     </select>
                     <button onClick={updateProfile} className='btn btn-primary w-100 mb-2'>
-                        {' '}
-                        Update{' '}
+                        Update
                     </button>
                     <button
                         onClick={signout}

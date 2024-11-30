@@ -14,7 +14,7 @@ export default function Signup() {
     };
     return (
         <div className='wd-signup-screen'>
-            <h1>Sign up</h1>
+            <h3>Sign up</h3>
             <input
                 value={user.username}
                 onChange={(e) => setUser({ ...user, username: e.target.value })}
@@ -31,7 +31,6 @@ export default function Signup() {
             <button onClick={signup} className='wd-signup-btn btn btn-primary mb-2 w-100'>
                 Sign up
             </button>
-            <br />
             <Link to='/Kanbas/Account/Signin' className='wd-signin-link'>
                 Sign in
             </Link>
