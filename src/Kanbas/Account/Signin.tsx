@@ -33,7 +33,7 @@ export default function Signin() {
                 type='password'
                 className='form-control mb-2'
             />
-            <button id='wd-signin-btn' onClick={signin} className='btn btn-primary w-100'>
+            <button id='wd-signin-btn' onClick={signin} className='btn btn-primary mb-2 w-100'>
                 Sign in
             </button>
             <Link id='wd-signup-link' to='/Kanbas/Account/Signup'>
