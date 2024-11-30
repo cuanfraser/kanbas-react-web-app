@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentUser } from './reducer';
 import * as client from './client';
 export default function Profile() {
-    const [profile, setProfile] = useState<any>({});
+    const [profile, setProfile] = useState<any>({ username: '', password: '', firstName: '', lastName: '', dob: new Date(), email: '', role: '' });
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -35,39 +35,51 @@ export default function Profile() {
                         value={profile.username}
                         id='wd-username'
                         className='form-control mb-2'
+                        placeholder='Username'
                         onChange={(e) => setProfile({ ...profile, username: e.target.value })}
                     />
+
                     <input
                         value={profile.password}
                         id='wd-password'
                         className='form-control mb-2'
+                        placeholder='Password'
                         onChange={(e) => setProfile({ ...profile, password: e.target.value })}
                     />
+
                     <input
                         value={profile.firstName}
                         id='wd-firstname'
                         className='form-control mb-2'
+                        placeholder='First name'
                         onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
                     />
+
                     <input
                         value={profile.lastName}
                         id='wd-lastname'
                         className='form-control mb-2'
+                        placeholder='Last name'
                         onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
                     />
+
                     <input
                         value={profile.dob}
                         id='wd-dob'
                         className='form-control mb-2'
+                        placeholder='Date of Birth'
                         onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
                         type='date'
                     />
+
                     <input
                         value={profile.email}
                         id='wd-email'
                         className='form-control mb-2'
+                        placeholder='Email'
                         onChange={(e) => setProfile({ ...profile, email: e.target.value })}
                     />
+
                     <select
                         onChange={(e) => setProfile({ ...profile, role: e.target.value })}
                         className='form-control mb-2'
@@ -79,9 +91,11 @@ export default function Profile() {
                         <option value='FACULTY'>Faculty</option>
                         <option value='STUDENT'>Student</option>
                     </select>
+
                     <button onClick={updateProfile} className='btn btn-primary w-100 mb-2'>
                         Update
                     </button>
+
                     <button
                         onClick={signout}
                         className='btn btn-danger w-100 mb-2'
