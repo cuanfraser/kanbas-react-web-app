@@ -79,8 +79,7 @@ export default function Profile() {
                         <option value='STUDENT'>Student</option>
                     </select>
                     <button onClick={updateProfile} className='btn btn-primary w-100 mb-2'>
-                        {' '}
-                        Update{' '}
+                        Update
                     </button>
                     <button
                         onClick={signout}
