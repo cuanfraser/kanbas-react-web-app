@@ -4,13 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentUser } from './reducer';
 import * as client from './client';
 export default function Profile() {
-    const [profile, setProfile] = useState<any>({ username: '', password: '', firstName: '', lastName: '', dob: new Date(), email: '', role: '' });
+    const [profile, setProfile] = useState<any>({ username: '', password: '', firstName: '', lastName: '', dob: '', email: '', role: '' });
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const fetchProfile = () => {
         if (!currentUser) return navigate('/Kanbas/Account/Signin');
-        setProfile(currentUser);
+        setProfile({...profile, ...currentUser});
     };
     const signout = async () => {
         await client.signout();
