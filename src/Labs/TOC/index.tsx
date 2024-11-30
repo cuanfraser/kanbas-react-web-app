@@ -77,7 +77,7 @@ export default function TOC() {
                 <Link
                     id='wd-heroku-node'
                     className='nav-link'
-                    to='https://kanbas-node-server-app-cf-8bcd8a610826.herokuapp.com/'
+                    to='https://kanbas-node-cf-a6-e3e6e56696dd.herokuapp.com/'
                 >
                     Node Heroku
                 </Link>
