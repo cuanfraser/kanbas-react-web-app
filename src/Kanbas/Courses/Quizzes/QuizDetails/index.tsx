@@ -41,7 +41,7 @@ export default function QuizDetails() {
         <table className=''>
           <tbody className='quiz-details-fields'>
             {Array.from(fieldsMap).map(([key, value]) => (
-              <QuizDetailsField label={key} value={value} />
+              <QuizDetailsField key={key} label={key} value={value} />
             ))}
           </tbody>
         </table>
