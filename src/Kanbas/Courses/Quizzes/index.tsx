@@ -23,6 +23,7 @@ export default function Quizzes() {
   return (
     <div id='wd-quizzes' className='text-nowrap'>
       <QuizzesControls />
+      <hr />
       <QuizzesList quizzes={quizzes} />
     </div>
   );

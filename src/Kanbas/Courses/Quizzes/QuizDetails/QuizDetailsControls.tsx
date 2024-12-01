@@ -14,12 +14,12 @@ export default function QuizDetailsControls() {
   };
 
   return (
-    <div id='wd-quiz-details-controls' className='d-flex justify-content-end gap-2 m-2'>
+    <div id='wd-quiz-details-controls' className='d-flex justify-content-center gap-4 m-1'>
       <button className='btn btn-secondary' onClick={navigateToPreview}>
         Preview
       </button>
-      <button className='btn btn-secondary fs-5' onClick={navigateToEditor}>
-        <FaPencilAlt />
+      <button className='btn btn-secondary d-flex align-items-center' onClick={navigateToEditor}>
+        <FaPencilAlt className='me-2 ms-1' />
         Edit
       </button>
     </div>
