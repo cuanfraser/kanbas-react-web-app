@@ -31,16 +31,24 @@ export default function QuizzesList({ quizzes }: { quizzes: Quiz[] }) {
       </li>
 
       {quizzes.map((quiz) => (
-        <li key={quiz._id.toString()} className='list-group-item p-3 ps-3 ps-5 d-flex align-items-center'>
-          <Link to={`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`}>
+        <li
+          key={quiz._id.toString()}
+          className='list-group-item p-3 ps-3 ps-5 d-flex align-items-center'>
+          <Link
+            to={`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`}
+            className='text-decoration-none text-reset'>
             <div className='quiz-list-details'>
               <div className='fs-4'>{quiz.title}</div>
               <div className=''>
                 <span className='me-2'>{getAvailability(quiz)}</span>
-                <span className='me-2'>Due {quiz.due.toString()}</span>
-                <span className='me-2'>{quiz.points.toString()} Pts</span>
-                <span className='me-2'>TODO Num Questions</span>
-                <span className='me-2'>TODO Student Score</span>
+                <div className='vr opacity-100' />
+                <span className='m-2'>Due {new Date(quiz.due).toLocaleString()}</span>
+                <div className='vr opacity-100' />
+                <span className='m-2'>{quiz.points.toString()} Pts</span>
+                <div className='vr opacity-100' />
+                <span className='m-2'>TODO Num Questions</span>
+                <div className='vr opacity-100' />
+                <span className='m-2'>TODO Student Score</span>
               </div>
             </div>
             <div className='quiz-list-controls'></div>
