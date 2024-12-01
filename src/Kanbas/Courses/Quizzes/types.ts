@@ -1,0 +1,21 @@
+export type Quiz = {
+  course: String;
+  title: String;
+  published: Boolean;
+  description: String;
+  type: String;
+  points: Number;
+  group: String;
+  shuffle: Boolean;
+  time: Number;
+  multiple_attempts: Boolean;
+  attempts: Number;
+  show_correct: String;
+  access_code: String;
+  one_question_at_a_time: Boolean;
+  webcam: Boolean;
+  lock_after_answers: Boolean;
+  due: Date;
+  available: Date;
+  available_until: Date;
+};
