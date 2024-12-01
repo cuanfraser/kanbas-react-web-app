@@ -69,7 +69,7 @@ export default function QuizDetailsEditor({
         </select>
       </div>
 
-      <div id='quiz-options-group' className='mb-3'>
+      <div id='quiz-options-group' className='mb-4'>
         <b>Options</b>
 
         <div id='quiz-shuffle-group' className='mb-2'>
@@ -111,7 +111,7 @@ export default function QuizDetailsEditor({
           </label>
         </div>
 
-        <div id='quiz-multiple-attempts-group' className='input-group p-2 border rounded'>
+        <div id='quiz-multiple-attempts-group' className='input-group p-2 border rounded mb-2'>
           <input
             id='quiz-multiple-attempts-checkbox'
             className='form-check-input me-2'
@@ -121,6 +121,59 @@ export default function QuizDetailsEditor({
           />
           <label htmlFor='quiz-multiple-attempts-checkbox' className='form-check-label'>
             Allow Multiple Attempts
+          </label>
+        </div>
+
+        <div id='quiz-show-correct-group' className='input-group mb-2'>
+          <input
+            id='quiz-show-correct-input'
+            className='form-control'
+            type='text'
+            value={quiz.show_correct}
+            placeholder='Show Correct Answers'
+            onChange={(e) => setQuiz({ ...quiz, show_correct: e.target.value })}
+          />
+          <label htmlFor='quiz-show-correct-input' className='form-label'>
+            Show Correct Answers
+          </label>
+        </div>
+
+        <div id='quiz-one-question-group' className='input-group mb-2'>
+          <input
+            id='quiz-one-question-checkbox'
+            className='form-check-input me-2'
+            type='checkbox'
+            checked={quiz.one_question_at_a_time}
+            onChange={(e) => setQuiz({ ...quiz, one_question_at_a_time: e.target.checked })}
+          />
+          <label htmlFor='quiz-one-question-checkbox' className='form-check-label'>
+            One Question at a Time
+          </label>
+        </div>
+
+        <div id='quiz-webcam-group' className='input-group mb-2'>
+          <input
+            id='quiz-webcam-checkbox'
+            className='form-check-input me-2'
+            type='checkbox'
+            checked={quiz.webcam}
+            onChange={(e) => setQuiz({ ...quiz, webcam: e.target.checked })}
+          />
+          <label htmlFor='quiz-webcam-checkbox' className='form-check-label'>
+            Webcam Required
+          </label>
+        </div>
+
+        <div id='quiz-lock-questions-group' className='input-group mb-2'>
+          <input
+            id='quiz-lock-questions-checkbox'
+            className='form-check-input me-2'
+            type='checkbox'
+            checked={quiz.lock_after_answers}
+            onChange={(e) => setQuiz({ ...quiz, lock_after_answers: e.target.checked })}
+          />
+          <label htmlFor='quiz-lock-questions-checkbox' className='form-check-label'>
+            Lock Questions After Answering
           </label>
         </div>
       </div>
