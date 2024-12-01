@@ -1,4 +1,5 @@
 import { BsGripVertical } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 export default function QuizzesList({ quizzes }: { quizzes: any[] }) {
   const getAvailability = (quiz: any) => {
@@ -30,17 +31,19 @@ export default function QuizzesList({ quizzes }: { quizzes: any[] }) {
 
       {quizzes.map((quiz) => (
         <li key={quiz._id} className='list-group-item p-3 ps-3 ps-5 d-flex align-items-center'>
-          <div className='quiz-list-details'>
-            <div className='fs-4'>{quiz.title}</div>
-            <div className=''>
-              <span className='me-2'>{getAvailability(quiz)}</span>
-              <span className='me-2'>Due {quiz.due}</span>
-              <span className='me-2'>{quiz.points} Pts</span>
-              <span className='me-2'>TODO Num Questions</span>
-              <span className='me-2'>TODO Student Score</span>
+          <Link to={`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`}>
+            <div className='quiz-list-details'>
+              <div className='fs-4'>{quiz.title}</div>
+              <div className=''>
+                <span className='me-2'>{getAvailability(quiz)}</span>
+                <span className='me-2'>Due {quiz.due}</span>
+                <span className='me-2'>{quiz.points} Pts</span>
+                <span className='me-2'>TODO Num Questions</span>
+                <span className='me-2'>TODO Student Score</span>
+              </div>
             </div>
-          </div>
-          <div className='quiz-list-controls'></div>
+            <div className='quiz-list-controls'></div>
+          </Link>
         </li>
       ))}
 
