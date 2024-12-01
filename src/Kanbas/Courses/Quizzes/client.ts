@@ -10,6 +10,11 @@ export const createQuiz = async (courseId: String, quiz: any) => {
   return data;
 };
 
+export const findQuizById = async (quizId: String) => {
+  const { data } = await axiosWithCredentials.get(`${QUIZZES_API}/${quizId}`);
+  return data;
+};
+
 export const findQuizzesForCourse = async (courseId: String) => {
   const { data } = await axiosWithCredentials.get(`${COURSES_API}/${courseId}/quizzes`);
   return data;
