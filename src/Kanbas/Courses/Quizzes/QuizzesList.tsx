@@ -1,8 +1,9 @@
 import { BsGripVertical } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { Quiz } from './types';
 
-export default function QuizzesList({ quizzes }: { quizzes: any[] }) {
-  const getAvailability = (quiz: any) => {
+export default function QuizzesList({ quizzes }: { quizzes: Quiz[] }) {
+  const getAvailability = (quiz: Quiz) => {
     if (!quiz.available || !quiz.available_until) {
       return '';
     }
@@ -30,14 +31,14 @@ export default function QuizzesList({ quizzes }: { quizzes: any[] }) {
       </li>
 
       {quizzes.map((quiz) => (
-        <li key={quiz._id} className='list-group-item p-3 ps-3 ps-5 d-flex align-items-center'>
+        <li key={quiz._id.toString()} className='list-group-item p-3 ps-3 ps-5 d-flex align-items-center'>
           <Link to={`/Kanbas/Courses/${quiz.course}/Quizzes/${quiz._id}`}>
             <div className='quiz-list-details'>
               <div className='fs-4'>{quiz.title}</div>
               <div className=''>
                 <span className='me-2'>{getAvailability(quiz)}</span>
-                <span className='me-2'>Due {quiz.due}</span>
-                <span className='me-2'>{quiz.points} Pts</span>
+                <span className='me-2'>Due {quiz.due.toString()}</span>
+                <span className='me-2'>{quiz.points.toString()} Pts</span>
                 <span className='me-2'>TODO Num Questions</span>
                 <span className='me-2'>TODO Student Score</span>
               </div>

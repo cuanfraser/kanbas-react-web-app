@@ -10,11 +10,11 @@ export default function QuizDetails() {
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
 
   useEffect(() => {
-    const fetchQuiz = async (quizId: String) => {
+    const fetchQuiz = async (quizId: string) => {
       const quiz = await findQuizById(quizId);
       setQuiz(quiz);
     };
-    fetchQuiz(quizId as String);
+    fetchQuiz(quizId as string);
   }, [cid, quizId]);
 
   return (

@@ -1,17 +1,19 @@
 import { useDispatch } from 'react-redux';
 import { createQuiz } from './client';
 import { addQuiz } from './reducer';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function QuizzesControls() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cid } = useParams();
 
   const createDefaultQuiz = async () => {
     const defaultQuiz = { title: 'New Quiz' };
-    const createdQuiz = await createQuiz(cid as String, defaultQuiz);
+    const createdQuiz = await createQuiz(cid as string, defaultQuiz);
     dispatch(addQuiz(createdQuiz));
+    navigate(`/Kanbas/Courses/${cid}/Quizzes/${createdQuiz._id}/edit`);
   };
 
   return (

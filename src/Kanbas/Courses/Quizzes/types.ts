@@ -1,17 +1,18 @@
 export type Quiz = {
-  course: String;
-  title: String;
+  _id: string;
+  course: string;
+  title: string;
   published: Boolean;
-  description: String;
-  type: String;
+  description: string;
+  type: string;
   points: Number;
-  group: String;
+  group: string;
   shuffle: Boolean;
   time: Number;
   multiple_attempts: Boolean;
   attempts: Number;
-  show_correct: String;
-  access_code: String;
+  show_correct: string;
+  access_code: string;
   one_question_at_a_time: Boolean;
   webcam: Boolean;
   lock_after_answers: Boolean;

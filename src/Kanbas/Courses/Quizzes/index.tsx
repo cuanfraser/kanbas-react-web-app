@@ -5,18 +5,19 @@ import QuizzesList from './QuizzesList';
 import { findQuizzesForCourse } from './client';
 import { setQuizzes } from './reducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 export default function Quizzes() {
   const dispatch = useDispatch();
   const { cid } = useParams();
-  const { quizzes } = useSelector((state: any) => state.quizzesReducer);
+  const { quizzes } = useSelector((state: RootState) => state.quizzesReducer);
 
   useEffect(() => {
-    const fetchQuizzes = async (courseId: String) => {
+    const fetchQuizzes = async (courseId: string) => {
       const quizzes = await findQuizzesForCourse(courseId);
       dispatch(setQuizzes(quizzes));
     };
-    fetchQuizzes(cid as String);
+    fetchQuizzes(cid as string);
   }, [cid, dispatch]);
 
   return (

@@ -1,7 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-const initialState = {
+import { Quiz } from './types';
+
+interface QuizState {
+  quizzes: Quiz[];
+}
+
+const initialState: QuizState = {
   quizzes: [],
 };
+
 const quizzesSlice = createSlice({
   name: 'quizzes',
   initialState,
@@ -11,17 +18,17 @@ const quizzesSlice = createSlice({
     },
 
     addQuiz: (state, { payload: quiz }) => {
-      state.quizzes = [...state.quizzes, quiz] as any;
+      state.quizzes = [...state.quizzes, quiz];
     },
 
     deleteQuiz: (state, { payload: quizId }) => {
-      state.quizzes = state.quizzes.filter((currentQuiz: any) => currentQuiz._id !== quizId);
+      state.quizzes = state.quizzes.filter((currentQuiz) => currentQuiz._id !== quizId);
     },
-    
+
     updateQuiz: (state, { payload: quiz }) => {
-      state.quizzes = state.quizzes.map((currentQuiz: any) =>
+      state.quizzes = state.quizzes.map((currentQuiz) =>
         currentQuiz._id === quiz._id ? quiz : currentQuiz
-      ) as any;
+      );
     },
   },
 });
