@@ -1,8 +1,4 @@
 import { BsGripVertical } from 'react-icons/bs';
-import FacultyOnly from '../../FacultyOnly';
-import { IoEllipsisVertical } from 'react-icons/io5';
-import { FaPlus } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 
 export default function QuizzesList({ quizzes }: { quizzes: any[] }) {
   const getAvailability = (quiz: any) => {
@@ -26,7 +22,7 @@ export default function QuizzesList({ quizzes }: { quizzes: any[] }) {
   };
 
   return (
-    <ul id='wd-quizzes-list' className='list-group'>
+    <ul id='wd-quizzes-list' className='list-group m-2'>
       <li className='list-group-item d-flex align-items-center fs-5 p-3 ps-2 bg-secondary'>
         <BsGripVertical className='me-2 fs-3' />
         <div className='fs-3'>Quizzes</div>
@@ -47,6 +43,8 @@ export default function QuizzesList({ quizzes }: { quizzes: any[] }) {
           <div className='quiz-list-controls'></div>
         </li>
       ))}
+
+      {quizzes.length < 1 && <li className='list-group-item p-3 ps-5'>Click "Add Quiz" button.</li>}
     </ul>
   );
 }
