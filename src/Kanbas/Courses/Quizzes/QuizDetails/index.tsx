@@ -4,15 +4,18 @@ import { findQuizById } from '../client';
 import QuizDetailsControls from './QuizDetailsControls';
 import { Quiz } from '../types';
 import QuizDetailsField from './QuizDetailsField';
+import { Question } from '../Questions/types';
+import { findQuestionsForQuiz } from '../Questions/client';
 
 export default function QuizDetails() {
   const { cid } = useParams();
   const { quizId } = useParams();
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
+  const [questions, setQuestions] = useState<Question[]>([]);
 
   const fieldsMap = new Map<string, string | number>([
     ['Quiz Type', quiz.type],
-    ['Points', quiz.points],
+    ['Points', questions ? questions.reduce((acc, curr) => acc + curr.points, 0) : 0],
     ['Assignment Group', quiz.group],
     ['Shuffle Answers', quiz.shuffle ? 'Yes' : 'No'],
     ['Time Limit', quiz.time ? `${quiz.time} minutes` : ''],
@@ -25,8 +28,9 @@ export default function QuizDetails() {
 
   useEffect(() => {
     const fetchQuiz = async (quizId: string) => {
-      const quiz = await findQuizById(quizId);
-      setQuiz(quiz);
+      const quizResponse = await findQuizById(quizId);
+      setQuiz(quizResponse);
+      findQuestionsForQuiz(quizResponse._id).then((response) => setQuestions(response));
     };
     fetchQuiz(quizId as string);
   }, [cid, quizId]);
