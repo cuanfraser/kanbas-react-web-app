@@ -6,6 +6,8 @@ import QuizQuestionsEditor from './QuizQuestionsEditor';
 import QuizDetailsEditor from './QuizDetailsEditor';
 import { Question } from '../Questions/types';
 import { findQuestionsForQuiz } from '../Questions/client';
+import { IoIosCheckbox } from 'react-icons/io';
+import { TiCancel } from 'react-icons/ti';
 
 export default function QuizEditor() {
   const { cid } = useParams();
@@ -32,6 +34,7 @@ export default function QuizEditor() {
     available_until: new Date(),
   } as Quiz);
   const [questionsDisplay, setQuestionsDisplay] = useState(false);
+  const [totalPoints, setTotalPoints] = useState(0);
 
   const [questions, setQuestions] = useState<Question[]>([]);
 
@@ -45,9 +48,14 @@ export default function QuizEditor() {
     const fetchQuestions = async (quizId: string) => {
       const questions = await findQuestionsForQuiz(quizId);
       setQuestions(questions);
-    }
+    };
     fetchQuestions(quizId as string);
   }, [cid, quizId]);
+
+  useEffect(() => {
+    const totalPoints = questions.reduce((acc, curr) => acc + curr.points, 0);
+    setTotalPoints(totalPoints);
+  }, [questions]);
 
   const handleSave = async () => {
     await updateQuiz(quiz);
@@ -62,6 +70,22 @@ export default function QuizEditor() {
 
   return (
     <div id='quiz-editor'>
+      <div className='d-flex justify-content-end align-items-center gap-3'>
+        <span>Points {totalPoints}</span>
+        <span>
+          {quiz.published ? (
+            <span className='d-flex align-items-center'>
+              <IoIosCheckbox className='fs-4' />
+              Published
+            </span>
+          ) : (
+            <span className='d-flex align-items-center text-secondary'>
+              <TiCancel className='fs-4' />
+              Not Published
+            </span>
+          )}
+        </span>
+      </div>
       <hr />
 
       <ul id='quiz-editor-nav' className='nav nav-tabs mb-4'>
