@@ -5,7 +5,6 @@ export type Quiz = {
   published: boolean;
   description: string;
   type: string;
-  points: number;
   group: string;
   shuffle: boolean;
   time: number;

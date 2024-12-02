@@ -19,7 +19,6 @@ export default function QuizEditor() {
     published: false,
     description: '',
     type: '',
-    points: 0,
     group: '',
     shuffle: true,
     time: 0,
