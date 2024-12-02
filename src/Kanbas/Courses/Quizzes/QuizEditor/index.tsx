@@ -38,17 +38,10 @@ export default function QuizEditor() {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    const fetchQuiz = async (quizId: string) => {
-      const quiz = await findQuizById(quizId);
-      setQuiz(quiz);
-    };
-    fetchQuiz(quizId as string);
-
-    const fetchQuestions = async (quizId: string) => {
-      const questions = await findQuestionsForQuiz(quizId);
-      setQuestions(questions);
-    };
-    fetchQuestions(quizId as string);
+    if (quizId) {
+      findQuizById(quizId).then((response) => setQuiz(response));
+      findQuestionsForQuiz(quizId).then((response) => setQuestions(response));
+    }
   }, [cid, quizId]);
 
   useEffect(() => {

@@ -13,11 +13,9 @@ export default function Quizzes() {
   const { quizzes } = useSelector((state: RootState) => state.quizzesReducer);
 
   useEffect(() => {
-    const fetchQuizzes = async (courseId: string) => {
-      const quizzes = await findQuizzesForCourse(courseId);
-      dispatch(setQuizzes(quizzes));
-    };
-    fetchQuizzes(cid as string);
+    if (cid) {
+      findQuizzesForCourse(cid).then((response) => dispatch(setQuizzes(response)));
+    }
   }, [cid, dispatch]);
 
   return (

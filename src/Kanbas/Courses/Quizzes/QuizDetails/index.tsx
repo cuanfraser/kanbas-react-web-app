@@ -8,7 +8,6 @@ import { Question } from '../Questions/types';
 import { findQuestionsForQuiz } from '../Questions/client';
 
 export default function QuizDetails() {
-  const { cid } = useParams();
   const { quizId } = useParams();
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -27,13 +26,15 @@ export default function QuizDetails() {
   ]);
 
   useEffect(() => {
-    const fetchQuiz = async (quizId: string) => {
-      const quizResponse = await findQuizById(quizId);
-      setQuiz(quizResponse);
-      findQuestionsForQuiz(quizResponse._id).then((response) => setQuestions(response));
-    };
-    fetchQuiz(quizId as string);
-  }, [cid, quizId]);
+    if (quizId) {
+      const fetchQuiz = async (quizId: string) => {
+        const quizResponse = await findQuizById(quizId);
+        setQuiz(quizResponse);
+        findQuestionsForQuiz(quizResponse._id).then((response) => setQuestions(response));
+      };
+      fetchQuiz(quizId as string);
+    }
+  }, [quizId]);
 
   return (
     <div id='wd-quiz-details'>

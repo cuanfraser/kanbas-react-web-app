@@ -18,7 +18,9 @@ export default function QuizzesListItem({ quiz }: { quiz: Quiz }) {
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
-    findQuestionsForQuiz(quiz._id).then((response) => setQuestions(response));
+    if (quiz) {
+      findQuestionsForQuiz(quiz._id).then((response) => setQuestions(response));
+    }
   }, [quiz]);
 
   const getAvailability = (quiz: Quiz) => {
