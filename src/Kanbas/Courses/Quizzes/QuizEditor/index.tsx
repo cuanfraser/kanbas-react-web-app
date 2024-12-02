@@ -4,12 +4,14 @@ import { Quiz } from '../types';
 import { findQuizById, updateQuiz } from '../client';
 import QuizQuestionsEditor from './QuizQuestionsEditor';
 import QuizDetailsEditor from './QuizDetailsEditor';
-import { useDispatch } from 'react-redux';
+import { Question } from '../Questions/types';
+import { findQuestionsForQuiz } from '../Questions/client';
 
 export default function QuizEditor() {
   const { cid } = useParams();
   const { quizId } = useParams();
   const navigate = useNavigate();
+
   const [quiz, setQuiz] = useState<Quiz>({
     title: '',
     published: false,
@@ -31,12 +33,20 @@ export default function QuizEditor() {
   } as Quiz);
   const [questionsDisplay, setQuestionsDisplay] = useState(false);
 
+  const [questions, setQuestions] = useState<Question[]>([]);
+
   useEffect(() => {
     const fetchQuiz = async (quizId: string) => {
       const quiz = await findQuizById(quizId);
       setQuiz(quiz);
     };
     fetchQuiz(quizId as string);
+
+    const fetchQuestions = async (quizId: string) => {
+      const questions = await findQuestionsForQuiz(quizId);
+      setQuestions(questions);
+    }
+    fetchQuestions(quizId as string);
   }, [cid, quizId]);
 
   const handleSave = async () => {
@@ -72,7 +82,7 @@ export default function QuizEditor() {
       </ul>
 
       {questionsDisplay ? (
-        <QuizQuestionsEditor quiz={quiz} />
+        <QuizQuestionsEditor quiz={quiz} questions={questions} setQuestions={setQuestions} />
       ) : (
         <QuizDetailsEditor quiz={quiz} setQuiz={setQuiz} />
       )}
