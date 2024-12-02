@@ -39,7 +39,28 @@ export default function QuizEditor() {
   return (
     <div id='quiz-editor'>
       <hr />
-      {questionsDisplay ? <QuizQuestionsEditor quiz={quiz} /> : <QuizDetailsEditor quiz={quiz} setQuiz={setQuiz} />}
+
+      <ul className='nav nav-tabs mb-4'>
+        <li className='nav-item'>
+          <button
+            className={`nav-link ${questionsDisplay ? 'text-danger' : 'active'}`}
+            onClick={() => setQuestionsDisplay(false)}>
+            Details
+          </button>
+        </li>
+        <li className='nav-item'>
+          <button
+            className={`nav-link ${questionsDisplay ? 'active' : 'text-danger'}`}
+            onClick={() => setQuestionsDisplay(true)}>
+            Questions
+          </button>
+        </li>
+      </ul>
+      {questionsDisplay ? (
+        <QuizQuestionsEditor quiz={quiz} />
+      ) : (
+        <QuizDetailsEditor quiz={quiz} setQuiz={setQuiz} />
+      )}
     </div>
   );
 }
