@@ -10,7 +10,7 @@ export default function QuizzesControls() {
   const { cid } = useParams();
 
   const createDefaultQuiz = async () => {
-    const defaultQuiz = { title: 'New Quiz' };
+    const defaultQuiz = { title: 'New Quiz', published: false };
     const createdQuiz = await createQuiz(cid as string, defaultQuiz);
     dispatch(addQuiz(createdQuiz));
     navigate(`/Kanbas/Courses/${cid}/Quizzes/${createdQuiz._id}/edit`);
