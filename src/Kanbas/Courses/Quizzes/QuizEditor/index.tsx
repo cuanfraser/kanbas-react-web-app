@@ -63,8 +63,7 @@ export default function QuizEditor() {
   };
 
   const handleSavePublish = async () => {
-    setQuiz({ ...quiz, published: true });
-    await updateQuiz(quiz);
+    await updateQuiz({ ...quiz, published: true });
     navigate(`/Kanbas/Courses/${cid}/Quizzes`);
   };
 
