@@ -23,7 +23,7 @@ export default function MultipleChoiceEditor({
   };
 
   return (
-    <div>
+    <div className='my-2'>
       <div>Enter your question and multiple answers, then select the one correct answer.</div>
 
       <div className='question-editor-multiple-question'>
