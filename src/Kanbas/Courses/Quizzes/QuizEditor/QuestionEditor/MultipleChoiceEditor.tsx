@@ -37,22 +37,26 @@ export default function MultipleChoiceEditor({
 
       <div className='question-editor-multiple-answers'>
         <h4>Answers:</h4>
+        <p>Select single correct answer</p>
         {question.choices.map((choice, indx) => (
-          <div key={`${question._id}-choice-${indx}`}>
+          <div key={`${question._id}-choice-${indx}`} className='form-check'>
             <input
               type='radio'
               className='form-check-input'
+              id={`${question._id}-answer-choice-${indx}`}
               name={`${question._id}-answer-choice`}
               value={indx}
               checked={question.answer === question.choices[indx]}
               onChange={() => handleCorrectAnswerChange(indx)}
             />
-            <input
-              type='text'
-              className='form-control mb-2'
-              value={question.choices[indx]}
-              onChange={(e) => handleChoiceChange(e.target.value, indx)}
-            />
+            <label htmlFor={`${question._id}-answer-choice-${indx}`} className='form-check-label'>
+              <input
+                type='text'
+                className='form-control mb-2'
+                value={question.choices[indx]}
+                onChange={(e) => handleChoiceChange(e.target.value, indx)}
+              />
+            </label>
           </div>
         ))}
 
