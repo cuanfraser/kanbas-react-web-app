@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Question, QuestionType } from '../../Questions/types';
 import MultipleChoiceEditor from './MultipleChoiceEditor';
-import { findQuestionById } from '../../Questions/client';
+import { findQuestionById, updateQuestion } from '../../Questions/client';
 
 export default function QuestionEditor({ questionId }: { questionId: string }) {
   const [question, setQuestion] = useState<Question>({
@@ -19,6 +19,14 @@ export default function QuestionEditor({ questionId }: { questionId: string }) {
       findQuestionById(questionId).then((response) => setQuestion(response));
     }
   }, [questionId]);
+
+  const handleSave = () => {
+    updateQuestion(question);
+  };
+
+  const handleCancel = () => {
+    findQuestionById(question._id).then((response) => setQuestion(response));
+  };
 
   return (
     <li className='list-group-item'>
@@ -46,15 +54,14 @@ export default function QuestionEditor({ questionId }: { questionId: string }) {
           </select>
 
           <div className='d-flex'>
-            <label
-              htmlFor={`${questionId}-question-points-input`}
-              className='col-form-label me-1'>
+            <label htmlFor={`${questionId}-question-points-input`} className='col-form-label me-1'>
               Points
             </label>
             <div className=''>
               <input
                 id={`${questionId}-question-points-input`}
                 className='form-control'
+                type='number'
                 inputMode='numeric'
                 value={question.points}
                 required={true}
@@ -69,6 +76,15 @@ export default function QuestionEditor({ questionId }: { questionId: string }) {
         {question && question.type === QuestionType.MULTIPLE_CHOICE && (
           <MultipleChoiceEditor question={question} setQuestion={setQuestion} />
         )}
+
+        <div className='question-buttons d-flex my-2 gap-2'>
+          <button className='btn btn-secondary' onClick={handleCancel}>
+            Cancel
+          </button>
+          <button className='btn btn-danger' onClick={handleSave}>
+            Save
+          </button>
+        </div>
       </form>
     </li>
   );
