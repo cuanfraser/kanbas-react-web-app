@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Question, QuestionType } from '../../Questions/types';
 import MultipleChoiceEditor from './MultipleChoiceEditor';
 import { findQuestionById, updateQuestion } from '../../Questions/client';
+import TrueFalseEditor from './TrueFalseEditor';
+import FillInEditor from './FillInEditor';
 
 export default function QuestionEditor({ questionId }: { questionId: string }) {
   const [question, setQuestion] = useState<Question>({
@@ -73,9 +75,19 @@ export default function QuestionEditor({ questionId }: { questionId: string }) {
 
         <hr />
 
-        {question && question.type === QuestionType.MULTIPLE_CHOICE && (
-          <MultipleChoiceEditor question={question} setQuestion={setQuestion} />
-        )}
+        <div>
+          {question && question.type === QuestionType.MULTIPLE_CHOICE && (
+            <MultipleChoiceEditor question={question} setQuestion={setQuestion} />
+          )}
+
+          {question && question.type === QuestionType.TRUE_FALSE && (
+            <TrueFalseEditor question={question} setQuestion={setQuestion} />
+          )}
+
+          {question && question.type === QuestionType.FILL_IN && (
+            <FillInEditor question={question} setQuestion={setQuestion} />
+          )}
+        </div>
 
         <div className='question-buttons d-flex my-2 gap-2'>
           <button type='button' className='btn btn-secondary' onClick={handleCancel}>
