@@ -78,10 +78,10 @@ export default function QuestionEditor({ questionId }: { questionId: string }) {
         )}
 
         <div className='question-buttons d-flex my-2 gap-2'>
-          <button className='btn btn-secondary' onClick={handleCancel}>
+          <button type='button' className='btn btn-secondary' onClick={handleCancel}>
             Cancel
           </button>
-          <button className='btn btn-danger' onClick={handleSave}>
+          <button type='button' className='btn btn-danger' onClick={handleSave}>
             Save
           </button>
         </div>
