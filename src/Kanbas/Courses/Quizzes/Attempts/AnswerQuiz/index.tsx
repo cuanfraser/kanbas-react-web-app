@@ -41,6 +41,18 @@ export default function AnswerQuiz() {
     }
   }, [quizId, currentUser, navigate, dispatch]);
 
+  const handlePrevClick = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentQuestion + 1 < questions.length) {
+      setCurrentQuestion(currentQuestion + 1);
+    }
+  };
+
   if (quiz && questions) {
     return (
       <form id='quiz-attempt' className=''>
@@ -54,15 +66,17 @@ export default function AnswerQuiz() {
         </div>
 
         {quiz.one_question_at_a_time && (
-          <button
-            type='button'
-            className='btn btn-secondary'
-            onChange={() => setCurrentQuestion(currentQuestion + 1)}>
-            Next
-          </button>
+          <div className='d-flex justify-content-between m-2'>
+            <button type='button' className='btn btn-secondary' onClick={handlePrevClick}>
+              Previous
+            </button>
+            <button type='button' className='btn btn-secondary' onClick={handleNextClick}>
+              Next
+            </button>
+          </div>
         )}
 
-        <div className='quiz-attempt-buttons d-flex gap-2 mt-2'>
+        <div className='quiz-attempt-buttons d-flex justify-content-center gap-2 m-2'>
           {(currentUser.role === 'FACULTY' || currentUser.role === 'ADMIN') && (
             <button
               type='button'
