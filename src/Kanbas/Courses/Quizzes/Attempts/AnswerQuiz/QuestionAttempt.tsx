@@ -3,6 +3,7 @@ import { Question, QuestionType } from '../../Questions/types';
 import MultipleChoiceAnswers from './MultipleChoiceAnswers';
 import { useEffect, useState } from 'react';
 import { addQuestionAttempt } from '../reducer';
+import TrueFalseAnswers from './TrueFalseAnswers';
 
 export default function QuestionPrompt({ question }: { question: Question }) {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ export default function QuestionPrompt({ question }: { question: Question }) {
         <hr />
         <p>{question.question}</p>
 
+        <hr />
+
         {question.type === QuestionType.MULTIPLE_CHOICE && (
           <MultipleChoiceAnswers
             questionId={question._id}
@@ -32,6 +35,9 @@ export default function QuestionPrompt({ question }: { question: Question }) {
             answer={answer}
             setAnswer={setAnswer}
           />
+        )}
+        {question.type === QuestionType.TRUE_FALSE && (
+          <TrueFalseAnswers questionId={question._id} answer={answer} setAnswer={setAnswer} />
         )}
       </div>
     );
