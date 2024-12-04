@@ -12,7 +12,7 @@ const initialState: QuizAttemptState = {
     user_id: '',
     answers: [],
     score: 0,
-    started: new Date(),
+    started: new Date().toString(),
     submitted: false,
   },
 };

@@ -33,11 +33,13 @@ export default function AnswerQuiz() {
         const questionResponse = await findQuestionsForQuiz(quizResponse._id);
         setQuestions(questionResponse);
         // TODO EXISTING
-        createAttempt(quizId, quizAttempt).then((response) => dispatch(setAttempt(response)));
+        createAttempt(quizId, { started: new Date().toString() }).then((response) =>
+          dispatch(setAttempt(response))
+        );
       };
       fetchQuiz(quizId as string);
     }
-  }, [quizId, currentUser, navigate]);
+  }, [quizId, currentUser, navigate, dispatch]);
 
   if (quiz && questions) {
     return (
