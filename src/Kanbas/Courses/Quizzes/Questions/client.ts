@@ -3,11 +3,14 @@ import { Question } from './types';
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
 const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
-const QUESTIONS_API = `${REMOTE_SERVER}/api/questions`
+const QUESTIONS_API = `${REMOTE_SERVER}/api/questions`;
 const QUIZZES_API = `${REMOTE_SERVER}/api/quizzes`;
 
 export const createQuestion = async (quizId: string, question: Question) => {
-  const { data } = await axiosWithCredentials.post(`${QUIZZES_API}/${quizId}/questions`, question);
+  const { data } = await axiosWithCredentials.post(`${QUIZZES_API}/${quizId}/questions`, {
+    ...question,
+    quiz_id: quizId,
+  });
   return data;
 };
 
