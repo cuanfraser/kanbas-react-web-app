@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { findQuizById } from '../client';
 import QuizDetailsControls from './QuizDetailsControls';
 import { Quiz } from '../types';
 import QuizDetailsField from './QuizDetailsField';
 import { Question } from '../Questions/types';
 import { findQuestionsForQuiz } from '../Questions/client';
+import FacultyOnly from '../../../FacultyOnly';
+import StudentOnly from '../../../StudentOnly';
 
 export default function QuizDetails() {
-  const { quizId } = useParams();
+  const { cid, quizId } = useParams();
+  const navigate = useNavigate();
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
   const [questions, setQuestions] = useState<Question[]>([]);
 
@@ -38,8 +41,11 @@ export default function QuizDetails() {
 
   return (
     <div id='wd-quiz-details'>
-      <QuizDetailsControls />
-      <hr />
+      <FacultyOnly>
+        <QuizDetailsControls />
+        <hr />
+      </FacultyOnly>
+
       <div>
         <h2>{quiz.title}</h2>
 
@@ -68,6 +74,17 @@ export default function QuizDetails() {
           </tbody>
         </table>
       </div>
+
+      <StudentOnly>
+        <div className='d-flex justify-content-center mt-2'>
+          <button
+            type='button'
+            className='btn btn-danger'
+            onClick={() => navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/attempt`)}>
+            Take the Quiz
+          </button>
+        </div>
+      </StudentOnly>
     </div>
   );
 }
