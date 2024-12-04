@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { EMPTY_QUESTION, Question } from '../../Questions/types';
+import { Question } from '../../Questions/types';
 import { Quiz } from '../../types';
 import { findQuizById } from '../../client';
 import { findQuestionsForQuiz } from '../../Questions/client';
 import QuestionPrompt from './QuestionAttempt';
 import { useDispatch, useSelector } from 'react-redux';
-import { QuizAttempt } from '../types';
 import { createAttempt } from '../client';
 import { RootState } from '../../../../store';
-import { addQuestionAttempt, setAttempt } from '../reducer';
+import { setAttempt } from '../reducer';
 
 export default function AnswerQuiz() {
   const { cid, quizId } = useParams();
