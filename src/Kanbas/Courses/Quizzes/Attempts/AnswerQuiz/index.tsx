@@ -6,7 +6,7 @@ import { findQuizById } from '../../client';
 import { findQuestionsForQuiz } from '../../Questions/client';
 import QuestionPrompt from './QuestionAttempt';
 import { useDispatch, useSelector } from 'react-redux';
-import { createAttempt } from '../client';
+import { createAttempt, updateAttempt } from '../client';
 import { RootState } from '../../../../store';
 import { setAttempt } from '../reducer';
 
@@ -53,6 +53,10 @@ export default function AnswerQuiz() {
     }
   };
 
+  const handleSubmit = async () => {
+    await updateAttempt({ ...quizAttempt, submitted: true });
+  };
+
   if (quiz && questions) {
     return (
       <form id='quiz-attempt' className=''>
@@ -86,7 +90,7 @@ export default function AnswerQuiz() {
             </button>
           )}
 
-          <button type='button' className='btn btn-secondary'>
+          <button type='button' className='btn btn-secondary' onClick={handleSubmit}>
             Submit Quiz
           </button>
         </div>
