@@ -4,17 +4,15 @@ import MultipleChoiceAnswers from './MultipleChoiceAnswers';
 import { useEffect, useState } from 'react';
 import { addQuestionAttempt } from '../reducer';
 
-export default function QuestionPrompt({
-  question,
-}: {
-  question: Question;
-}) {
+export default function QuestionPrompt({ question }: { question: Question }) {
   const dispatch = useDispatch();
   const [answer, setAnswer] = useState<string>('');
 
   useEffect(() => {
-    dispatch(addQuestionAttempt({ question_id: question._id, answer: answer }));
-  }, [answer, dispatch, question._id]);
+    if (question) {
+      dispatch(addQuestionAttempt({ question_id: question._id, answer: answer }));
+    }
+  }, [answer, dispatch, question]);
 
   if (question) {
     return (
