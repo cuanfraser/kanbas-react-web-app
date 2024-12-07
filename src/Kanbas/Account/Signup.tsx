@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as client from './client';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentUser } from './reducer';
 export default function Signup() {
-    const [user, setUser] = useState<any>({});
+    const [user, setUser] = useState<any>({ username: '', password: '' });
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const signup = async () => {
@@ -12,6 +12,12 @@ export default function Signup() {
         dispatch(setCurrentUser(currentUser));
         navigate('/Kanbas/Account/Profile');
     };
+
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    useEffect(() => {
+        if (currentUser) return navigate('/Kanbas/Account/Profile');
+    }, [currentUser, navigate])
+
     return (
         <div className='wd-signup-screen'>
             <h3>Sign up</h3>

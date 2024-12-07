@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { setCurrentUser } from './reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as client from './client';
 
 export default function Signin() {
-    const [credentials, setCredentials] = useState<any>({});
+    const [credentials, setCredentials] = useState<any>({ username: '', password: '' });
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const signin = async () => {
@@ -14,6 +14,11 @@ export default function Signin() {
         dispatch(setCurrentUser(user));
         navigate('/Kanbas/Dashboard');
     };
+
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    useEffect(() => {
+        if (currentUser) return navigate('/Kanbas/Account/Profile');
+    }, [currentUser, navigate])
 
     return (
         <div id='wd-signin-screen'>
