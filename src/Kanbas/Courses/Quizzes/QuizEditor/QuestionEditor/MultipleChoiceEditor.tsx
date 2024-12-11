@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Question } from '../../Questions/types';
+import Editor from 'react-simple-wysiwyg';
 
 export default function MultipleChoiceEditor({
   question,
@@ -28,8 +29,8 @@ export default function MultipleChoiceEditor({
 
       <div className='question-editor-multiple-question'>
         <h4>Question:</h4>
-        <textarea
-          className='form-control mb-3'
+        <Editor
+          className='mb-3'
           value={question.question}
           onChange={(e) => setQuestion({ ...question, question: e.target.value })}
         />
