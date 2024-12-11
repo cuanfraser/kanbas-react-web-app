@@ -43,8 +43,8 @@ export default function QuizzesListItem({ quiz }: { quiz: Quiz }) {
     return '';
   };
 
-  const handlePublish = async (quiz: Quiz) => {
-    const updatedQuiz = await updateQuiz({ ...quiz, published: true });
+  const handlePublish = async (givenQuiz: Quiz) => {
+    const updatedQuiz = await updateQuiz({ ...givenQuiz, published: !givenQuiz.published });
     dispatch(updateLocalQuiz(updatedQuiz));
   };
 
@@ -109,9 +109,16 @@ export default function QuizzesListItem({ quiz }: { quiz: Quiz }) {
                 </button>
               </li>
               <li>
-                <button className='dropdown-item btn' onClick={() => handlePublish(quiz)}>
-                  Publish
-                </button>
+                {quiz.published && (
+                  <button className='dropdown-item btn' onClick={() => handlePublish(quiz)}>
+                    Unpublish
+                  </button>
+                )}
+                {!quiz.published && (
+                  <button className='dropdown-item btn' onClick={() => handlePublish(quiz)}>
+                    Publish
+                  </button>
+                )}
               </li>
             </ul>
           </div>
