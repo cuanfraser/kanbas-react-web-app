@@ -1,4 +1,5 @@
 import { Quiz } from '../types';
+import Editor from 'react-simple-wysiwyg';
 
 export default function QuizDetailsEditor({
   quiz,
@@ -27,9 +28,9 @@ export default function QuizDetailsEditor({
         onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
       />
 
-      <textarea
+      <Editor
         id='quiz-description'
-        className='form-control mb-3'
+        className='mb-3'
         value={quiz.description}
         placeholder='Quiz Description'
         onChange={(e) => setQuiz({ ...quiz, description: e.target.value })}
