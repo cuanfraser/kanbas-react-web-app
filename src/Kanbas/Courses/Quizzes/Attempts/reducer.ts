@@ -30,9 +30,9 @@ const quizAttemptSlice = createSlice({
         (curr) => curr.question_id === questionAttempt.question_id
       );
       if (existingAnswerIndx === -1) {
-        state.quizAttempt.answers[existingAnswerIndx] = questionAttempt;
-      } else {
         state.quizAttempt.answers.push(questionAttempt);
+      } else {
+        state.quizAttempt.answers[existingAnswerIndx] = questionAttempt;
       }
     },
   },
