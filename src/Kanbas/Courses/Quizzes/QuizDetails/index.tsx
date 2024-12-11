@@ -26,6 +26,7 @@ export default function QuizDetails() {
     ['One Question at a Time', quiz.one_question_at_a_time ? 'Yes' : 'No'],
     ['Webcame Requred', quiz.webcam ? 'Yes' : 'No'],
     ['Lock Questions After Answering', quiz.lock_after_answers ? 'Yes' : 'No'],
+    ['Access Code', quiz.access_code],
   ]);
 
   useEffect(() => {

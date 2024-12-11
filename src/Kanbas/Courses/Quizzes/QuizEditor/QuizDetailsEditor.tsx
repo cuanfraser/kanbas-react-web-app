@@ -188,6 +188,21 @@ export default function QuizDetailsEditor({
               Lock Questions After Answering
             </label>
           </div>
+
+          <div id='quiz-acess-code-group' className='row mb-2'>
+            <label htmlFor='quiz-access-code-input' className='col-auto col-form-label'>
+              Access Code
+            </label>
+            <div className='col-auto'>
+              <input
+                id='quiz-access-code-input'
+                className='form-control'
+                type='text'
+                value={quiz.access_code}
+                onChange={(e) => setQuiz({ ...quiz, access_code: e.target.value })}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
