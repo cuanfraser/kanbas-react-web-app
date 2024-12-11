@@ -29,6 +29,26 @@ export default function QuizDetails() {
     ['Access Code', quiz.access_code],
   ]);
 
+  const isAvailable = (quiz: Quiz) => {
+    if (!quiz.available || !quiz.available_until) {
+      return false;
+    }
+
+    const currentDate = new Date();
+    const available = new Date(quiz.available);
+    const availableUntil = new Date(quiz.available_until);
+    if (currentDate > availableUntil) {
+      return false;
+    }
+    if (available < currentDate && currentDate < availableUntil) {
+      return true;
+    }
+    if (currentDate < available) {
+      return true;
+    }
+    return false;
+  };
+
   useEffect(() => {
     if (quizId) {
       const fetchQuiz = async (quizId: string) => {
@@ -78,12 +98,14 @@ export default function QuizDetails() {
 
       <StudentOnly>
         <div className='d-flex justify-content-center mt-2'>
-          <button
-            type='button'
-            className='btn btn-danger'
-            onClick={() => navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/attempt`)}>
-            Take the Quiz
-          </button>
+          {isAvailable(quiz) && (
+            <button
+              type='button'
+              className='btn btn-danger'
+              onClick={() => navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/attempt`)}>
+              Take the Quiz
+            </button>
+          )}
         </div>
       </StudentOnly>
     </div>
