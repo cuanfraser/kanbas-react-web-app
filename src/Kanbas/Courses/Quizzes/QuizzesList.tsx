@@ -1,6 +1,7 @@
 import { BsGripVertical } from 'react-icons/bs';
 import { Quiz } from './types';
 import QuizzesListItem from './QuizzesListItem';
+import FacultyOnly from '../../FacultyOnly';
 
 export default function QuizzesList({ quizzes }: { quizzes: Quiz[] }) {
   return (
@@ -14,7 +15,10 @@ export default function QuizzesList({ quizzes }: { quizzes: Quiz[] }) {
         <QuizzesListItem quiz={quiz} key={quiz._id.toString()} />
       ))}
 
-      {quizzes.length < 1 && <li className='list-group-item p-3 ps-5'>Click "Add Quiz" button.</li>}
+      <FacultyOnly>
+        {quizzes.length < 1 && <li className='list-group-item p-3 ps-5'>Click "Add Quiz" button.</li>}
+      </FacultyOnly>
+      
     </ul>
   );
 }
