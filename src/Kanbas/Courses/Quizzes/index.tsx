@@ -6,6 +6,7 @@ import { findQuizzesForCourse } from './client';
 import { setQuizzes } from './reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import FacultyOnly from '../../FacultyOnly';
 
 export default function Quizzes() {
   const dispatch = useDispatch();
@@ -20,7 +21,10 @@ export default function Quizzes() {
 
   return (
     <div id='wd-quizzes' className='text-nowrap'>
-      <QuizzesControls />
+      <FacultyOnly>
+        <QuizzesControls />
+      </FacultyOnly>
+
       <hr />
       <QuizzesList quizzes={quizzes} />
     </div>
