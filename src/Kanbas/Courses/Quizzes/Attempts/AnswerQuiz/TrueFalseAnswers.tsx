@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export default function TrueFalseAnswers({
   questionId,
   answer,
@@ -7,7 +5,7 @@ export default function TrueFalseAnswers({
 }: {
   questionId: string;
   answer: string;
-  setAnswer: Dispatch<SetStateAction<string>>;
+  setAnswer: (newAnswer: string) => void;
 }) {
   return (
     <div className=''>

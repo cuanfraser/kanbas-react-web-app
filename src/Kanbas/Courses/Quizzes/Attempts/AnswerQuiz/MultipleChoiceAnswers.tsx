@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export default function MultipleChoiceAnswers({
   questionId,
   choices,
@@ -9,7 +7,7 @@ export default function MultipleChoiceAnswers({
   questionId: string;
   choices: string[];
   answer: string;
-  setAnswer: Dispatch<SetStateAction<string>>;
+  setAnswer: (newAnswer: string) => void;
 }) {
   return (
     <div>

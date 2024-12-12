@@ -1,20 +1,41 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Question, QuestionType } from '../../Questions/types';
 import MultipleChoiceAnswers from './MultipleChoiceAnswers';
 import { useEffect, useState } from 'react';
 import { addQuestionAttempt } from '../reducer';
 import TrueFalseAnswers from './TrueFalseAnswers';
 import FillInAnswers from './FillInAnswers';
+import { QuestionAttempt } from '../types';
+import { RootState } from '../../../../store';
 
 export default function QuestionPrompt({ question }: { question: Question }) {
   const dispatch = useDispatch();
-  const [answer, setAnswer] = useState<string>('');
+  const { quizAttempt } = useSelector((state: RootState) => state.quizAttemptReducer);
+  const [questionAttempt, setQuestionAttempt] = useState<QuestionAttempt>({
+    question_id: '',
+    answer: '',
+  });
 
   useEffect(() => {
     if (question) {
-      dispatch(addQuestionAttempt({ question_id: question._id, answer: answer }));
+      if (questionAttempt.question_id !== question._id) {
+        dispatch(addQuestionAttempt(questionAttempt));
+        const foundAttempt = quizAttempt.answers.find(
+          (current) => current.question_id === question._id
+        );
+        if (foundAttempt) {
+          setQuestionAttempt(foundAttempt);
+        } else {
+          setQuestionAttempt({ question_id: question._id, answer: '' });
+        }
+      }
+      dispatch(addQuestionAttempt(questionAttempt));
     }
-  }, [answer, dispatch, question]);
+  }, [questionAttempt, dispatch, question, quizAttempt.answers]);
+
+  const setAnswer = (newAnswer: string) => {
+    setQuestionAttempt({ ...questionAttempt, answer: newAnswer });
+  };
 
   if (question) {
     return (
@@ -33,15 +54,23 @@ export default function QuestionPrompt({ question }: { question: Question }) {
           <MultipleChoiceAnswers
             questionId={question._id}
             choices={question.choices}
-            answer={answer}
+            answer={questionAttempt.answer}
             setAnswer={setAnswer}
           />
         )}
         {question.type === QuestionType.TRUE_FALSE && (
-          <TrueFalseAnswers questionId={question._id} answer={answer} setAnswer={setAnswer} />
+          <TrueFalseAnswers
+            questionId={question._id}
+            answer={questionAttempt.answer}
+            setAnswer={setAnswer}
+          />
         )}
         {question.type === QuestionType.FILL_IN && (
-          <FillInAnswers questionId={question._id} answer={answer} setAnswer={setAnswer} />
+          <FillInAnswers
+            questionId={question._id}
+            answer={questionAttempt.answer}
+            setAnswer={setAnswer}
+          />
         )}
       </div>
     );
