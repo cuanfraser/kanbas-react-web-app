@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Question } from '../../Questions/types';
+import Editor from 'react-simple-wysiwyg';
 
 export default function TrueFalseEditor({
   question,
@@ -14,7 +15,7 @@ export default function TrueFalseEditor({
 
       <div className='question-editor-true-false-question'>
         <h4>Question:</h4>
-        <textarea
+        <Editor
           className='form-control mb-3'
           value={question.question}
           onChange={(e) => setQuestion({ ...question, question: e.target.value })}

@@ -1,4 +1,5 @@
 import { Quiz } from '../types';
+import Editor from 'react-simple-wysiwyg';
 
 export default function QuizDetailsEditor({
   quiz,
@@ -27,9 +28,9 @@ export default function QuizDetailsEditor({
         onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
       />
 
-      <textarea
+      <Editor
         id='quiz-description'
-        className='form-control mb-3'
+        className='mb-3'
         value={quiz.description}
         placeholder='Quiz Description'
         onChange={(e) => setQuiz({ ...quiz, description: e.target.value })}
@@ -186,6 +187,21 @@ export default function QuizDetailsEditor({
             <label htmlFor='quiz-lock-questions-checkbox' className='form-check-label'>
               Lock Questions After Answering
             </label>
+          </div>
+
+          <div id='quiz-acess-code-group' className='row mb-2'>
+            <label htmlFor='quiz-access-code-input' className='col-auto col-form-label'>
+              Access Code
+            </label>
+            <div className='col-auto'>
+              <input
+                id='quiz-access-code-input'
+                className='form-control'
+                type='text'
+                value={quiz.access_code}
+                onChange={(e) => setQuiz({ ...quiz, access_code: e.target.value })}
+              />
+            </div>
           </div>
         </div>
       </div>

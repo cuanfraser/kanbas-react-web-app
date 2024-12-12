@@ -4,6 +4,7 @@ export type QuizAttempt = {
   user_id: string;
   answers: QuestionAttempt[];
   score: number;
+  number: number;
   started: string;
   submitted: boolean;
 };
@@ -11,4 +12,5 @@ export type QuizAttempt = {
 export type QuestionAttempt = {
   question_id: string;
   answer: string;
+  correct: boolean;
 };
