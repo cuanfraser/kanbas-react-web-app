@@ -21,6 +21,11 @@ export const findCurrentUserAttemptsForQuiz = async (quizId: string) => {
   return data;
 };
 
+export const findCurrentUserLatestAttemptForQuiz = async (quizId: string) => {
+  const { data } = await axiosWithCredentials.get(`${QUIZZES_API}/${quizId}/attempts/latest`);
+  return data;
+};
+
 export const updateAttempt = async (attempt: QuizAttempt) => {
   const { data } = await axiosWithCredentials.put(`${ATTEMPTS_API}/${attempt._id}`, attempt);
   return data;

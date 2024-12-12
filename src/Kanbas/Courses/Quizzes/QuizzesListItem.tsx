@@ -10,35 +10,46 @@ import { updateQuiz as updateLocalQuiz, deleteQuiz as deleteLocalQuiz } from './
 import { useEffect, useState } from 'react';
 import { Question } from './Questions/types';
 import { findQuestionsForQuiz } from './Questions/client';
+import { findCurrentUserLatestAttemptForQuiz } from './Attempts/client';
 
 export default function QuizzesListItem({ quiz }: { quiz: Quiz }) {
   const { cid } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [latestScore, setLatestScore] = useState<number>(-1);
 
   useEffect(() => {
     if (quiz) {
       findQuestionsForQuiz(quiz._id).then((response) => setQuestions(response));
+      if (quiz) {
+        findCurrentUserLatestAttemptForQuiz(quiz._id).then((latestAttempt) => {
+          if (latestAttempt && latestAttempt.submitted) {
+            setLatestScore(latestAttempt.score);
+          }
+        });
+      }
     }
   }, [quiz]);
 
-  const getAvailability = (quiz: Quiz) => {
-    if (!quiz.available || !quiz.available_until) {
-      return '';
-    }
+  const getAvailability = () => {
+    if (quiz) {
+      if (!quiz.available || !quiz.available_until) {
+        return '';
+      }
 
-    const currentDate = new Date();
-    const available = new Date(quiz.available);
-    const availableUntil = new Date(quiz.available_until);
-    if (currentDate > availableUntil) {
-      return 'Closed';
-    }
-    if (available < currentDate && currentDate < availableUntil) {
-      return 'Available';
-    }
-    if (currentDate < available) {
-      return `Not available until ${available}`;
+      const currentDate = new Date();
+      const available = new Date(quiz.available);
+      const availableUntil = new Date(quiz.available_until);
+      if (currentDate > availableUntil) {
+        return 'Closed';
+      }
+      if (available < currentDate && currentDate < availableUntil) {
+        return 'Available';
+      }
+      if (currentDate < available) {
+        return `Not available until ${available}`;
+      }
     }
     return '';
   };
@@ -61,7 +72,7 @@ export default function QuizzesListItem({ quiz }: { quiz: Quiz }) {
         <div className='quiz-list-details'>
           <div className='fs-4'>{quiz.title}</div>
           <div className='quiz-list-details-bottom'>
-            <span className='me-2'>{getAvailability(quiz)}</span>
+            <span className='me-2'>{getAvailability()}</span>
             <div className='vr opacity-100' />
             <span className='m-2'>Due {new Date(quiz.due).toLocaleString()}</span>
             <div className='vr opacity-100' />
@@ -71,7 +82,9 @@ export default function QuizzesListItem({ quiz }: { quiz: Quiz }) {
             <div className='vr opacity-100' />
             <span className='m-2'> {questions?.length} Questions</span>
             <div className='vr opacity-100' />
-            <span className='m-2'>TODO Student Score</span>
+            <span className='m-2'>
+              {latestScore === -1 ? 'Not attempted yet' : `${latestScore} pts on last attempt`}
+            </span>
           </div>
         </div>
       </Link>
