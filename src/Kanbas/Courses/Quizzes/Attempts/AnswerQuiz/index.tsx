@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { Question } from '../../Questions/types';
 import { Quiz } from '../../types';
 import { findQuizById } from '../../client';
 import { findQuestionsForQuiz } from '../../Questions/client';
 import QuestionPrompt from './QuestionPrompt';
 import { useDispatch, useSelector } from 'react-redux';
-import { createAttempt, updateAttempt } from '../client';
+import { createAttempt, findCurrentUserLatestAttemptForQuiz, updateAttempt } from '../client';
 import { RootState } from '../../../../store';
 import { setAttempt } from '../reducer';
 
 export default function AnswerQuiz() {
   const { cid, quizId } = useParams();
+  const location = useLocation();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -22,6 +23,9 @@ export default function AnswerQuiz() {
   const [showResults, setShowResults] = useState<boolean>(false);
 
   // TODO: CONTINUE EXISTING ATTEMPT, FACULTY TOO
+  // TOOD: CHECK ALL STUDENT VS FACULTY STUFF
+  // TODO: LIMIT TAKING QUIZ BY ATTEMPTS AND AVAILABILITY
+  // TODO ENROLLMENT BUTTON FOR FACULTY
 
   useEffect(() => {
     if (!currentUser) {
@@ -34,13 +38,20 @@ export default function AnswerQuiz() {
         const questionResponse = await findQuestionsForQuiz(quizResponse._id);
         setQuestions(questionResponse);
         // TODO EXISTING
-        createAttempt(quizId, { started: new Date().toString() }).then((response) =>
-          dispatch(setAttempt(response))
-        );
+        if (location.pathname.includes('last')) {
+          findCurrentUserLatestAttemptForQuiz(quizId).then((response) =>
+            dispatch(setAttempt(response))
+          );
+          setShowResults(true);
+        } else {
+          createAttempt(quizId, { started: new Date().toString() }).then((response) =>
+            dispatch(setAttempt(response))
+          );
+        }
       };
       fetchQuiz(quizId as string);
     }
-  }, [quizId, currentUser, navigate, dispatch]);
+  }, [quizId, currentUser, navigate, dispatch, location.pathname]);
 
   const handlePrevClick = () => {
     if (currentQuestion > 0) {
@@ -58,7 +69,7 @@ export default function AnswerQuiz() {
     dispatch(setAttempt(await updateAttempt({ ...quizAttempt, submitted: true })));
     setShowResults(true);
     setCurrentQuestion(0);
-    console.log("submited");
+    console.log('submited');
   };
 
   if (quiz && questions) {

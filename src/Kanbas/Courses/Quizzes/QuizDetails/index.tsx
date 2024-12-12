@@ -8,12 +8,14 @@ import { Question } from '../Questions/types';
 import { findQuestionsForQuiz } from '../Questions/client';
 import FacultyOnly from '../../../FacultyOnly';
 import StudentOnly from '../../../StudentOnly';
+import { findCurrentUserLatestAttemptForQuiz } from '../Attempts/client';
 
 export default function QuizDetails() {
   const { cid, quizId } = useParams();
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [attempted, setAttempted] = useState<boolean>(false);
 
   const fieldsMap = new Map<string, string | number>([
     ['Quiz Type', quiz.type],
@@ -57,6 +59,11 @@ export default function QuizDetails() {
         findQuestionsForQuiz(quizResponse._id).then((response) => setQuestions(response));
       };
       fetchQuiz(quizId as string);
+      findCurrentUserLatestAttemptForQuiz(quizId).then((latestAttempt) => {
+        if (latestAttempt && latestAttempt.submitted) {
+          setAttempted(true);
+        }
+      });
     }
   }, [quizId]);
 
@@ -104,6 +111,14 @@ export default function QuizDetails() {
               className='btn btn-danger'
               onClick={() => navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/attempt`)}>
               Take the Quiz
+            </button>
+          )}
+          {attempted && (
+            <button
+              type='button'
+              className='btn btn-danger'
+              onClick={() => navigate(`/Kanbas/Courses/${cid}/Quizzes/${quizId}/last`)}>
+              See Last Attempt
             </button>
           )}
         </div>
