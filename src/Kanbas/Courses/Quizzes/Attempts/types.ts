@@ -11,4 +11,5 @@ export type QuizAttempt = {
 export type QuestionAttempt = {
   question_id: string;
   answer: string;
+  correct: boolean;
 };

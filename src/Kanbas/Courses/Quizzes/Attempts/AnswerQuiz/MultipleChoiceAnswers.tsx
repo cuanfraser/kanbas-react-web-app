@@ -3,11 +3,13 @@ export default function MultipleChoiceAnswers({
   choices,
   answer,
   setAnswer,
+  showResults,
 }: {
   questionId: string;
   choices: string[];
   answer: string;
   setAnswer: (newAnswer: string) => void;
+  showResults: boolean;
 }) {
   return (
     <div>
@@ -20,6 +22,7 @@ export default function MultipleChoiceAnswers({
             name={`${questionId}-answer-choice`}
             value={indx}
             checked={answer === choices[indx]}
+            disabled={showResults}
             onChange={() => setAnswer(choice)}
           />
           <label htmlFor={`${questionId}-answer-choice-${indx}`} className='form-check-label'>

@@ -2,10 +2,12 @@ export default function TrueFalseAnswers({
   questionId,
   answer,
   setAnswer,
+  showResults,
 }: {
   questionId: string;
   answer: string;
   setAnswer: (newAnswer: string) => void;
+  showResults: boolean;
 }) {
   return (
     <div className=''>
@@ -17,6 +19,7 @@ export default function TrueFalseAnswers({
           name={`${questionId}-answer-choice`}
           value='true'
           checked={answer === 'true'}
+          disabled={showResults}
           onChange={() => setAnswer('true')}
         />
         <label htmlFor={`${questionId}-answer-choice-true`} className='form-check-label'>
@@ -32,6 +35,7 @@ export default function TrueFalseAnswers({
           name={`${questionId}-answer-choice`}
           value='false'
           checked={answer === 'false'}
+          disabled={showResults}
           onChange={() => setAnswer('false')}
         />
         <label htmlFor={`${questionId}-answer-choice-false`} className='form-check-label'>

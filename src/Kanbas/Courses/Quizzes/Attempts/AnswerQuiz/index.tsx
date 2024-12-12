@@ -4,7 +4,7 @@ import { Question } from '../../Questions/types';
 import { Quiz } from '../../types';
 import { findQuizById } from '../../client';
 import { findQuestionsForQuiz } from '../../Questions/client';
-import QuestionPrompt from './QuestionAttempt';
+import QuestionPrompt from './QuestionPrompt';
 import { useDispatch, useSelector } from 'react-redux';
 import { createAttempt, updateAttempt } from '../client';
 import { RootState } from '../../../../store';
@@ -19,6 +19,7 @@ export default function AnswerQuiz() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const { quizAttempt } = useSelector((state: RootState) => state.quizAttemptReducer);
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [showResults, setShowResults] = useState<boolean>(false);
 
   // TODO: CONTINUE EXISTING ATTEMPT, FACULTY TOO
 
@@ -54,7 +55,8 @@ export default function AnswerQuiz() {
   };
 
   const handleSubmit = async () => {
-    await updateAttempt({ ...quizAttempt, submitted: true });
+    dispatch(setAttempt(await updateAttempt({ ...quizAttempt, submitted: true })));
+    setShowResults(true);
   };
 
   if (quiz && questions) {
@@ -64,9 +66,13 @@ export default function AnswerQuiz() {
         <hr />
 
         <div className='quiz-attempt-questions border rounded border-1 p-2'>
-          {quiz.one_question_at_a_time && <QuestionPrompt question={questions[currentQuestion]} />}
+          {quiz.one_question_at_a_time && (
+            <QuestionPrompt question={questions[currentQuestion]} showResults={showResults} />
+          )}
           {!quiz.one_question_at_a_time &&
-            questions.map((question) => <QuestionPrompt question={question} />)}
+            questions.map((question) => (
+              <QuestionPrompt key={question._id} question={question} showResults={showResults} />
+            ))}
         </div>
 
         {quiz.one_question_at_a_time && (
@@ -90,9 +96,11 @@ export default function AnswerQuiz() {
             </button>
           )}
 
-          <button type='button' className='btn btn-secondary' onClick={handleSubmit}>
-            Submit Quiz
-          </button>
+          {!showResults && (
+            <button type='button' className='btn btn-secondary' onClick={handleSubmit}>
+              Submit Quiz
+            </button>
+          )}
         </div>
       </form>
     );
