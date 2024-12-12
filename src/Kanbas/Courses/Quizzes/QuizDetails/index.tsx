@@ -16,6 +16,7 @@ export default function QuizDetails() {
   const [quiz, setQuiz] = useState<Quiz>({} as Quiz);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [attempted, setAttempted] = useState<boolean>(false);
+  const [attemptsCount, setAttemptsCount] = useState<number>(0);
 
   const fieldsMap = new Map<string, string | number>([
     ['Quiz Type', quiz.type],
@@ -31,22 +32,33 @@ export default function QuizDetails() {
     ['Access Code', quiz.access_code],
   ]);
 
-  const isAvailable = (quiz: Quiz) => {
-    if (!quiz.available || !quiz.available_until) {
-      return false;
-    }
+  const isAvailable = () => {
+    if (quiz) {
+      if (!quiz.available || !quiz.available_until) {
+        return false;
+      }
 
-    const currentDate = new Date();
-    const available = new Date(quiz.available);
-    const availableUntil = new Date(quiz.available_until);
-    if (currentDate > availableUntil) {
+      const currentDate = new Date();
+      const available = new Date(quiz.available);
+      const availableUntil = new Date(quiz.available_until);
+      if (currentDate > availableUntil) {
+        return false;
+      }
+      if (available < currentDate && currentDate < availableUntil) {
+        return true;
+      }
+      if (currentDate < available) {
+        return true;
+      }
       return false;
     }
-    if (available < currentDate && currentDate < availableUntil) {
-      return true;
-    }
-    if (currentDate < available) {
-      return true;
+  };
+
+  const hasAttemptsLeft = () => {
+    if (quiz) {
+      if (quiz.multiple_attempts && quiz.attempts && quiz.attempts > attemptsCount) {
+        return true;
+      }
     }
     return false;
   };
@@ -62,6 +74,7 @@ export default function QuizDetails() {
       findCurrentUserLatestAttemptForQuiz(quizId).then((latestAttempt) => {
         if (latestAttempt && latestAttempt.submitted) {
           setAttempted(true);
+          setAttemptsCount(latestAttempt.number);
         }
       });
     }
@@ -105,7 +118,7 @@ export default function QuizDetails() {
 
       <StudentOnly>
         <div className='d-flex justify-content-center mt-2'>
-          {isAvailable(quiz) && (
+          {isAvailable() && hasAttemptsLeft() && (
             <button
               type='button'
               className='btn btn-danger'
