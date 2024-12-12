@@ -57,6 +57,8 @@ export default function AnswerQuiz() {
   const handleSubmit = async () => {
     dispatch(setAttempt(await updateAttempt({ ...quizAttempt, submitted: true })));
     setShowResults(true);
+    setCurrentQuestion(0);
+    console.log("submited");
   };
 
   if (quiz && questions) {

@@ -26,7 +26,6 @@ export default function QuestionPrompt({
   useEffect(() => {
     if (question) {
       if (questionAttempt.question_id !== question._id) {
-        dispatch(addQuestionAttempt(questionAttempt));
         const foundAttempt = quizAttempt.answers.find(
           (current) => current.question_id === question._id
         );
@@ -36,13 +35,13 @@ export default function QuestionPrompt({
           setQuestionAttempt({ question_id: question._id, answer: '', correct: false });
         }
       }
-      dispatch(addQuestionAttempt(questionAttempt));
     }
-  }, [questionAttempt, dispatch, question, quizAttempt.answers]);
+  }, [questionAttempt, question, quizAttempt.answers]);
 
   const setAnswer = (newAnswer: string) => {
     if (!showResults) {
       setQuestionAttempt({ ...questionAttempt, answer: newAnswer });
+      dispatch(addQuestionAttempt({ ...questionAttempt, answer: newAnswer }));
     }
   };
 
