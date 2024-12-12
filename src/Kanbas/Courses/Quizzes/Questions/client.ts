@@ -20,7 +20,12 @@ export const findQuestionById = async (questionId: string) => {
 };
 
 export const findQuestionsForQuiz = async (quizId: string) => {
-  const { data } = await axiosWithCredentials.get(`${QUIZZES_API}/${quizId}/questions`);
+  const { data } = await axiosWithCredentials
+    .get(`${QUIZZES_API}/${quizId}/questions`)
+    .catch((err) => {
+      console.log('Failed to find questions for quiz: ', err.message);
+      return { data: [] };
+    });
   return data;
 };
 
